@@ -3,7 +3,10 @@ import ReactDOM from 'react-dom/client';
 import './index.css';
 /*import SignUpPage from './components/signUpPage';*/
 /*import Verfication from './components/verfication';*/
+<<<<<<< HEAD
 /*import Login from './components/login';*/
+=======
+>>>>>>> d9b9cc382446abe9a7ef2bd3a7bad394ae2c7bfc
 import App from './App';
 import reportWebVitals from './reportWebVitals';
 
