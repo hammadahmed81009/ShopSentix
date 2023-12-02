@@ -1,11 +1,13 @@
 // src/App.js
 import React from 'react';
-import './App.css';
+import Navbar from "./Navbar/navbar"
+import Home from "./HomePage/home"
 
 export default function App() {
   return (
-    <h1 className="text-3xl font-bold">
-      Hello world!
-    </h1>
+    <>
+      <Navbar />
+      <Home/>
+    </>
   )
 }
