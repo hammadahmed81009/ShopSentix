@@ -10,6 +10,10 @@ import Section2 from './Hero/Section2'
 export default function App() {
   return (
     <>
+      <HeroNavbar />
+      <Section1 />
+      <Section2 />
     </>
+    
   );
 }
