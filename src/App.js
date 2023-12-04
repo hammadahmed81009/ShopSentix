@@ -7,7 +7,6 @@ import Sidebar from './Sidebar/sidebar';
 export default function App() {
   return (
     <>
-      <Sidebar />
     </>
   )
 }
