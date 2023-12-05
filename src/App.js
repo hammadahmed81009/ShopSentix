@@ -6,6 +6,7 @@ import Sidebar from './Sidebar/sidebar';
 import HeroNavbar from './Hero/HomeNavbar';
 import Section1 from './Hero/Section1'
 import Section2 from './Hero/Section2'
+import Section4 from './components/section4';
 
 export default function App() {
   return (
