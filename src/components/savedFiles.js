@@ -18,11 +18,7 @@ export default function SavedFiles() {
             price: 99.99,
             description: 'Lorem ipsum dolor sit amet, consectetur adipiscing elit.',
         },
-        {
-            name: 'Product A',
-            price: 99.99,
-            description: 'Lorem ipsum dolor sit amet, consectetur adipiscing elit.',
-        },
+        
         // Add more products as needed
       ];
   return (
@@ -42,8 +38,6 @@ export default function SavedFiles() {
         ))}
       </div>
     </div>
-
-
     </div>
   );
 }
