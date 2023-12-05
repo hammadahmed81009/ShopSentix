@@ -3,7 +3,7 @@ import React from 'react';
 export default function Section6() {
   return (
     <div>
-      <section className="text-gray-600 body-font relative">
+      <section className="text-gray-600 body-font relative" id="section6">
         <div className="absolute inset-0 bg-gray-300">
           <iframe
             title="map"

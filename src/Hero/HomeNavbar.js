@@ -38,7 +38,7 @@ const Navbar = () => {
                     </div>
 
                     {/* Secondary Navbar Items */}
-                    <div className="hidden md:flex items-center space-x-1">
+                    <div className="hidden md:flex items-center space-x-1 ml-auto">
                         <a href="#" className="py-2 px-3 bg-blue-500 hover:bg-blue-600 text-white rounded transition duration-300">Sign Up</a>
                         <a href="#" className="py-2 px-3 text-blue-500 hover:text-blue-600">Login</a>
                     </div>
