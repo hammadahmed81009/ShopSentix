@@ -41,8 +41,8 @@ const Card = ({ title, imageUrl }) => (
 
 const Page = () => {
   return (
-    <div Style="margin-top:100px">
-      <div className="relative bg-gray-100 min-h-screen p-10 flex flex-col items-center justify-center mt-24">
+    <section id="section3">
+      <div className="relative bg-gray-100 min-h-screen p-10 flex flex-col items-center justify-center mt-0">
         <h1 className="text-5xl font-bold text-black mb-8 z-10">
           Explore the ShopSentix
         </h1>
@@ -84,7 +84,7 @@ const Page = () => {
           </div>
         )}
       </div>
-    </div>
+    </section>
   );
 };
 
