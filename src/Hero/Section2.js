@@ -1,72 +1,60 @@
 import React, { useState } from 'react';
-// Import your images here
-import image1 from '../Resources/Hero1.jpg';
-import image2 from '../Resources/Hero1.jpg';
-// ... import other images as needed
 
 // Dummy data for the options and images
 const options = [
-  { name: 'Accurate Results for your Product', image: 'image1' },
-  { name: 'More than One Format', image: 'image2' },
-  // ... add more options as needed
+  {
+    name: 'Accurate Results for your Product',
+    imageSrc:
+      'https://images.unsplash.com/photo-1460925895917-afdab827c52f?w=500&auto=format&fit=crop&q=60&ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxzZWFyY2h8NHx8ZGF0YSUyMGFuZCUyMGdyYXBoc3xlbnwwfHwwfHx8MA%3D%3D',
+  },
+  { name: 'More than One Format', imageSrc: 'https://images.unsplash.com/photo-1579226905180-636b76d96082?w=500&auto=format&fit=crop&q=60&ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxzZWFyY2h8N3x8ZGF0YSUyMGFuZCUyMGdyYXBoc3xlbnwwfHwwfHx8MA%3D%3D' },
+  { name: 'Saved PDFs', imageSrc: 'https://images.unsplash.com/photo-1560472354-b33ff0c44a43?w=500&auto=format&fit=crop&q=60&ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxzZWFyY2h8MTJ8fGRhdGElMjBhbmQlMjBncmFwaHN8ZW58MHx8MHx8fDA%3D' },
 ];
 
 const Page = () => {
   const [activeOption, setActiveOption] = useState(options[0].name);
-  const [activeImage, setActiveImage] = useState(options[0].image);
-
-  // Function to handle option click
-  const handleOptionClick = (option) => {
-    setActiveOption(option.name);
-    setActiveImage(option.image);
-  };
-
-  // Function to render the active image
-  const renderActiveImage = () => {
-    switch (activeImage) {
-      case 'image1':
-        return <img src={image1} alt="Description" />;
-      case 'image2':
-        return <img src={image2} alt="Description" />;
-      // ... handle other cases as needed
-      default:
-        return null;
-    }
-  };
+  const [activeImageSrc, setActiveImageSrc] = useState(options[0].imageSrc);
 
   return (
-    <div className="relative min-h-screen bg-white flex">
-      {/* Blue and Black Decorative Elements */}
-      <div className="absolute top-0 left-0 w-full h-full">
-        {/* Add decorative elements here */}
-        <div className="absolute top-5 left-10 w-16 h-16 bg-blue-500 rounded-full"></div>
-        <div className="absolute top-20 left-20 w-10 h-10 bg-black rounded-full"></div>
-        {/* ... more shapes */}
-      </div>
-
-      {/* Sidebar for Navigation Links */}
-      <div className="w-64 bg-white p-8 space-y-4">
-        {options.map((option, index) => (
-          <div
-            key={index}
-            className={`cursor-pointer p-2 text-lg font-medium ${
-              activeOption === option.name ? 'border-l-4 border-blue-500 bg-blue-100' : 'hover:bg-blue-50'
-            }`}
-            onClick={() => handleOptionClick(option)}
-          >
-            {option.name}
-          </div>
-        ))}
-      </div>
-
-      {/* Main Content Area */}
-      <div className="flex-grow flex items-center justify-center p-8">
-        <div className="w-3/4 h-3/4 bg-white rounded-lg shadow-lg overflow-hidden">
-          {/* Animated Image Area */}
-          <div className="w-full h-full transition-opacity duration-500 ease-in-out">
-            {renderActiveImage()}
-          </div>
+    <div className="flex h-screen items-stretch overflow-hidden">
+      <div className="w-1/2 p-16 bg-white">
+        <div className="mb-20">
+          <h1 className="text-4xl font-extrabold text-black inline-block">
+            What We Have For You
+          </h1>
+          {/* Decorative Line */}
+          <div className="h-1 bg-sky-500" style={{ width: '18rem', marginTop: '0.5rem' }}></div>
         </div>
+        <ul className="space-y-6">
+          {options.map((option, index) => (
+            <li
+              key={index}
+              className="text-3xl font-semibold whitespace-nowrap"
+              onMouseEnter={() => {
+                setActiveOption(option.name);
+                setActiveImageSrc(option.imageSrc);
+              }}
+            >
+              <div
+                className={`transition-all duration-300 ease-in-out ${
+                  activeOption === option.name
+                    ? 'bg-sky-500 text-white shadow-sm rounded-2xl px-2.5 py-3'
+                    : 'hover:bg-sky-500 hover:text-white hover:shadow-sm hover:rounded-2xl hover:px-2.5 hover:py-3'
+                }`}
+              >
+                {option.name}
+              </div>
+            </li>
+          ))}
+        </ul>
+      </div>
+      <div className="w-1/2 bg-gray-100 flex justify-center items-center">
+        <img
+          src={activeImageSrc}
+          alt="Selected Option"
+          className="transition-opacity duration-500 ease-in-out w-full h-full object-cover"
+          style={{ opacity: activeImageSrc ? 1 : 0 }}
+        />
       </div>
     </div>
   );

@@ -11,8 +11,12 @@ import Section4 from './components/section4';
 export default function App() {
   return (
     <>
-    
-    <Section4/>
+      <HeroNavbar />
+      <Section1 />
+      <Section2 />
+      <Section3 />
+      <Section5 />
     </>
+    
   );
 }
