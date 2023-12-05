@@ -2,7 +2,7 @@ import React from 'react';
 import Navbar from "./Navbar/navbar"
 import SavedFiles from './components/savedFiles';
 import HomePage from './HomePage/home'
-import Sidebar from './Sidebar/sidebar';
+import Sidebar from './ProductDashboard/sidebar';
 import SentimentCard from './ProductDashboard/SentimentCard';
 
 export default function App() {
