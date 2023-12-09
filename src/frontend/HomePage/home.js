@@ -2,10 +2,10 @@ import React from 'react';
 
 export default function Home() {
   return (
-    <section className="text-gray-400 bg-gray-900 body-font relative">
+    <section className="text-gray-400 bg-white body-font relative">
       <div className="container px-5 py-24 mx-auto">
         <div className="flex flex-col text-center w-full mb-12">
-          <h1 className="sm:text-3xl text-2xl font-medium title-font mb-4 text-white">
+          <h1 className="sm:text-3xl text-2xl font-medium title-font mb-4 text-black">
             LOGO
           </h1>
           <p className="lg:w-2/3 mx-auto leading-relaxed text-base">
@@ -21,16 +21,12 @@ export default function Home() {
                   type="text"
                   id="name"
                   name="name"
-                  className="w-full bg-gray-800 bg-opacity-40 rounded border border-gray-700 focus:border-indigo-500 focus:bg-gray-900 focus:ring-2 focus:ring-indigo-900 text-base outline-none text-gray-100 py-1 px-3 leading-8 transition-colors duration-200 ease-in-out"
+                  className="w-full bg-white bg-opacity-40 rounded border border-gray-700 focus:border-indigo-500 focus:bg-white focus:ring-2 focus:ring-indigo-900 text-base outline-none text-gray-800 py-1 px-3 leading-8 transition-colors duration-200 ease-in-out"
                 />
               </div>
             </div>
           </div>
         </div>
-      </div>
-      <div className="flex items-center ml-8">
-        <span className="mr-2">Your Text Here</span>
-        <div className="flex-1 border-t border-gray-800 mr-8"></div>
       </div>
 
       <section className="text-gray-400 bg-gray-900 body-font">
