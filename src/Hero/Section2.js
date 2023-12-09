@@ -1,21 +1,24 @@
 import React, { useState } from 'react';
+import slideImage1 from '../Resources/slideImagie1.jpg';
+import slideImage2 from '../Resources/slideImage2.jpg';
+import slideImage3 from '../Resources/slideImage3.jpg';
 
 // Dummy data for the options and images
 const options = [
   {
     name: 'Accurate Results for your Product',
     imageSrc:
-      'https://images.unsplash.com/photo-1460925895917-afdab827c52f?w=500&auto=format&fit=crop&q=60&ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxzZWFyY2h8NHx8ZGF0YSUyMGFuZCUyMGdyYXBoc3xlbnwwfHwwfHx8MA%3D%3D',
+      slideImage1,
   },
   {
     name: 'More than One Format',
     imageSrc:
-      'https://images.unsplash.com/photo-1579226905180-636b76d96082?w=500&auto=format&fit=crop&q=60&ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxzZWFyY2h8N3x8ZGF0YSUyMGFuZCUyMGdyYXBoc3xlbnwwfHwwfHx8MA%3D%3D',
+    slideImage2,
   },
   {
     name: 'Saved PDFs',
     imageSrc:
-      'https://images.unsplash.com/photo-1560472354-b33ff0c44a43?w=500&auto=format&fit=crop&q=60&ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxzZWFyY2h8MTJ8fGRhdGElMjBhbmQlMjBncmFwaHN8ZW58MHx8MHx8fDA%3D',
+    slideImage3,
   },
 ];
 
@@ -25,7 +28,15 @@ const Page = () => {
 
   return (
     <section id="section2">
-      <div className="flex h-screen items-stretch overflow-hidden">
+      <div className="flex h-screen items-stretch overflow-hidden relative">
+        {/* Blue circle background */}
+        <div className="absolute left-12 bottom-10 transform translate-y-1/2 -translate-x-1/2 w-64 h-64 bg-black rounded-full"></div>
+        {/* Black bars background */}
+        <div className="absolute right-1/2 top-1/6 transform -translate-y-1/4 -translate-x-1/2 flex items-center space-x-2">
+          <div className="w-2 h-24 bg-blue-600"></div>
+          <div className="w-2 h-32 bg-black"></div>
+          <div className="w-2 h-40 bg-blue-600"></div>
+        </div>
         <div className="w-1/2 p-16 bg-white">
           <div className="mb-20">
             <h1 className="text-4xl font-extrabold text-black inline-block">
@@ -60,6 +71,7 @@ const Page = () => {
             ))}
           </ul>
         </div>
+
         <div className="w-1/2 bg-gray-100 flex justify-center items-center">
           <img
             src={activeImageSrc}
@@ -68,6 +80,9 @@ const Page = () => {
             style={{ opacity: activeImageSrc ? 1 : 0 }}
           />
         </div>
+
+        {/* Black circle background */}
+        <div className="absolute left-32 bottom-28 transform translate-y-1/2 -translate-x-1/2 w-36 h-36 bg-blue-500 rounded-full"></div>
       </div>
     </section>
   );

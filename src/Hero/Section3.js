@@ -42,7 +42,22 @@ const Card = ({ title, imageUrl }) => (
 const Page = () => {
   return (
     <section id="section3">
-      <div className="relative bg-gray-100 min-h-screen p-10 flex flex-col items-center justify-center mt-0">
+      <div className="relative bg-gray-100 min-h-screen p-10 flex flex-col items-center justify-center mt-0 overflow-hidden">
+        {/*Blue Decorative Circle*/ }
+        <div className="absolute right-12 top-4 transform -translate-y-1/2 translate-x-1/2 w-64 h-64 bg-blue-500 rounded-full overflow-hidden">
+          <div className="absolute left-0 right-0 bottom-0 h-64 bg-blue-500"></div>
+        </div>
+
+        <div className="absolute right-32 top-28 transform -translate-y-1/2 translate-x-1/2 w-36 h-36 bg-blue-500 rounded-full overflow-hidden">
+          <div className="absolute left-0 right-0 bottom-0 h-64 bg-black"></div>
+        </div>
+
+        {/* Black bars background */}
+        <div className="absolute left-8 top-1 transform -translate-y-1/4 flex items-center space-x-2">
+          <div className="w-2 h-40 bg-blue-600"></div>
+          <div className="w-2 h-32 bg-black"></div>
+          <div className="w-2 h-24 bg-blue-600"></div>
+        </div>
         <h1 className="text-5xl font-bold text-black mb-8 z-10">
           Explore the ShopSentix
         </h1>
@@ -50,7 +65,7 @@ const Page = () => {
           className="h-1 bg-sky-500"
           style={{ width: '18rem', marginTop: '-1rem' }}
         ></div>
-              <p className="text-lg mt-24 mb-0 z-10">
+        <p className="text-lg mt-24 mb-0 z-10">
           Dive into the heart of words, where sentiments come to life.
         </p>
 
