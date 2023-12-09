@@ -4,7 +4,7 @@ import developerImage from '../Resources/Muhammad Ibrahim.jpg'; // Update the pa
 
 const DeveloperMessageSection = () => {
   return (
-    <div className="relative bg-gray-100  p-10 flex flex-col justify-center overflow-hidden">
+    <div className="relative bg-gray-100  p-10 flex flex-col justify-center">
       {/* Blue circle background */}
       <div className="absolute right-20 top-1/6 transform -translate-y-1/2 w-64 h-64 bg-blue-500 rounded-full"></div>
 
