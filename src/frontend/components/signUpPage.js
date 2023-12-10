@@ -1,11 +1,47 @@
-import React from 'react';
+import React, { useEffect, useState } from "react"
+import axios from "axios"
+import { useNavigate, Link } from "react-router-dom"
 import image from '../Resources/Register-Background.png';
 import { Link as RouterLink } from 'react-router-dom';
 
 const RegisterPage = () => {
+  const history=useNavigate();
+
+  const [email,setEmail]=useState('')
+  const [password,setPassword]=useState('')
+
+  async function submit(e){
+      e.preventDefault();
+
+      try{
+
+          await axios.post("http://localhost:8000/signup",{
+              email,password
+          })
+          .then(res=>{
+              if(res.data=="exist"){
+                  alert("User already exists")
+              }
+              else if(res.data=="notexist"){
+                  history("/home",{state:{id:email}})
+              }
+          })
+          .catch(e=>{
+              alert("wrong details")
+              console.log(e);
+          })
+
+      }
+      catch(e){
+          console.log(e);
+
+      }
+
+  }
+
   return (
     <div
-      className="min-h-screen py-40"
+      className="h-screen py-20"
       style={{ backgroundImage: 'linear-gradient(115deg, #3498db, #8e44ad)' }}
     >
       <div className="container mx-auto">
@@ -30,7 +66,7 @@ const RegisterPage = () => {
             <p className="mb-4">
               Create your account. It’s free and only takes a minute
             </p>
-            <form action="#">
+            <form action="POST">
               <div className="grid grid-cols-2 gap-5">
                 <input
                   type="text"
@@ -45,7 +81,8 @@ const RegisterPage = () => {
               </div>
               <div className="mt-5">
                 <input
-                  type="text"
+                  type="email"
+                  onChange={(e) => { setEmail(e.target.value) }}
                   placeholder="Email"
                   className="border rounded-md border-gray-400 py-1 px-2 w-full"
                 />
@@ -53,6 +90,7 @@ const RegisterPage = () => {
               <div className="mt-5">
                 <input
                   type="password"
+                  onChange={(e) => { setPassword(e.target.value) }}
                   placeholder="Password"
                   className="border rounded-md border-gray-400 py-1 px-2 w-full"
                 />
@@ -78,7 +116,7 @@ const RegisterPage = () => {
                 </span>
               </div>
               <div className="mt-5">
-                <button className="w-full bg-blue-600 py-3 text-center text-white">
+                <button onClick={ submit } className="w-full bg-blue-600 py-3 text-center text-white">
                   Register Now
                 </button>
                 <span>
