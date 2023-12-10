@@ -84,8 +84,8 @@ def process_image_url(raw_image_url):
             # Handle regular image URL
             return 'https:' + raw_image_url
     else:
-        # Handle other cases or provide a default image URL
-        return 'Default image URL'
+        # Return the original image URL
+        return raw_image_url
 
 # Function to decode base64 image data
 def decode_base64_image(data_url):
