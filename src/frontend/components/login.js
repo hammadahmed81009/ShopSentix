@@ -1,29 +1,72 @@
 import React from 'react';
+import image from '../Resources/Register-Background.png'; // Replace with the correct path to your image
+import googleSVG from '../Resources/google.svg'
+import { Link as RouterLink } from 'react-router-dom';
 
-export default function Login() {
+const LoginComponent = () => {
   return (
-    <div>
-      <section className="text-gray-400 bg-gray-900 body-font">
-        <div className="container px-5 py-24 mx-auto flex flex-wrap items-center">
-          <div className="lg:w-3/5 md:w-1/2 md:pr-16 lg:pr-0 pr-0">
-            <h1 className="title-font font-medium text-3xl text-white">Welcome back! Login to your account</h1>
-            <p className="leading-relaxed mt-4">Poke slow-carb mixtape knausgaard, typewriter street art gentrify hammock starladder roathse. Craies vegan tousled etsy austin.</p>
+    <div className="flex items-center justify-center min-h-screen bg-gray-100" style={{ backgroundImage: 'linear-gradient(115deg, #3498db, #8e44ad)' }}>
+      <div className="relative flex flex-col m-6 space-y-8 bg-white shadow-2xl rounded-2xl md:flex-row md:space-y-0">
+        {/* Left side */}
+        <div className="flex flex-col justify-center p-8 md:p-14">
+          <span className="mb-3 text-4xl font-bold">Welcome back</span>
+          <span className="font-light text-gray-400 mb-8">
+            Welcome back! Please enter your details
+          </span>
+          <div className="py-4">
+            <span className="mb-2 text-md">Email</span>
+            <input
+              type="text"
+              className="w-full p-2 border border-gray-300 rounded-md placeholder:font-light placeholder:text-gray-500"
+              name="email"
+              id="email"
+            />
           </div>
-          <div className="lg:w-2/6 md:w-1/2 bg-gray-800 bg-opacity-50 rounded-lg p-8 flex flex-col md:ml-auto w-full mt-10 md:mt-0">
-            <h2 className="text-white text-lg font-medium title-font mb-5">Login</h2>
-            <div className="relative mb-4">
-              <label htmlFor="email" className="leading-7 text-sm text-gray-400">Email</label>
-              <input type="email" id="email" name="email" className="w-full bg-gray-600 bg-opacity-20 focus:bg-transparent focus:ring-2 focus:ring-indigo-900 rounded border border-gray-600 focus:border-indigo-500 text-base outline-none text-gray-100 py-1 px-3 leading-8 transition-colors duration-200 ease-in-out" />
+          <div className="py-4">
+            <span className="mb-2 text-md">Password</span>
+            <input
+              type="password"
+              name="pass"
+              id="pass"
+              className="w-full p-2 border border-gray-300 rounded-md placeholder:font-light placeholder:text-gray-500"
+            />
+          </div>
+          <div className="flex justify-between w-full py-4">
+            <div className="mr-24">
+              <input type="checkbox" name="ch" id="ch" className="mr-2" />
+              <span className="text-md">Remember for 30 days</span>
             </div>
-            <div className="relative mb-4">
-              <label htmlFor="password" className="leading-7 text-sm text-gray-400">Password</label>
-              <input type="password" id="password" name="password" className="w-full bg-gray-600 bg-opacity-20 focus:bg-transparent focus:ring-2 focus:ring-indigo-900 rounded border border-gray-600 focus:border-indigo-500 text-base outline-none text-gray-100 py-1 px-3 leading-8 transition-colors duration-200 ease-in-out" />
-            </div>
-            <button className="text-white bg-indigo-500 border-0 py-2 px-8 focus:outline-none hover:bg-indigo-600 rounded text-lg">Login</button>
-            <p className="text-xs mt-3">Forgot your password? <a href="abc" className="text-indigo-500 hover:underline">Reset it here</a>.</p>
+            <span className="font-bold text-md">Forgot password</span>
+          </div>
+          <RouterLink to="/home">
+          <button
+            className="w-full bg-blue-600 text-white p-2 rounded-lg mb-6 hover:bg-white hover:text-blue-600 hover:border hover:border-blue-600"
+          >
+            Sign in
+          </button>
+          </RouterLink>
+          <button
+            className="w-full border border-gray-300 text-md p-2 rounded-lg mb-6 hover:bg-blue-600 hover:text-white"
+          >
+            <img src={googleSVG} alt="img" className="w-6 h-6 inline mr-2" />
+            Sign in with Google
+          </button>
+          <div className="text-center text-gray-400">
+            Don't have an account?
+            <RouterLink to="/signup" className="font-bold text-blue-600">Sign up for free</RouterLink>
           </div>
         </div>
-      </section>
+        {/* Right side */}
+        <div className="relative">
+          <img
+            src={image}
+            alt="img"
+            className="w-[400px] h-full hidden rounded-r-2xl md:block object-cover"
+          />
+        </div>
+      </div>
     </div>
   );
-}
+};
+
+export default LoginComponent;

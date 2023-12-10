@@ -1,50 +1,99 @@
-import React from 'react'
+import React from 'react';
+import image from '../Resources/Register-Background.png';
+import { Link as RouterLink } from 'react-router-dom';
 
-export default function signUpPage() {
+const RegisterPage = () => {
   return (
-    <div>
-      <body className="bg-gray-100 flex items-center justify-center h-screen">
-
-<div className="bg-white p-8 rounded shadow-md w-96">
-
-    <h1 className="text-2xl font-bold mb-6">Sign Up</h1>
-
-    <form action="#" method="post">
-
-        <div className="mb-4">
-            <label for="name" className="block text-gray-700 text-sm font-bold mb-2">Name</label>
-            <input type="text" 
-            id="name"
-             name="name"
-              className="w-full border rounded px-3 py-2 focus:outline-none focus:border-blue-500" required></input>
+    <div
+      className="min-h-screen py-40"
+      style={{ backgroundImage: 'linear-gradient(115deg, #3498db, #8e44ad)' }}
+    >
+      <div className="container mx-auto">
+        <div className="flex flex-col lg:flex-row w-10/12 lg:w-8/12 bg-white rounded-xl mx-auto shadow-lg overflow-hidden">
+          <div
+            className="w-full lg:w-1/2 flex flex-col items-center justify-center p-12 bg-no-repeat bg-cover bg-center"
+            style={{ backgroundImage: `url(${image})` }}
+          >
+            <h1 className="text-white text-3xl mb-3">Welcome</h1>
+            <div>
+              <p className="text-white">
+                Lorem ipsum dolor sit amet, consectetur adipiscing elit. Aenean
+                suspendisse aliquam varius rutrum purus maecenas ac{' '}
+                <a href="#" className="text-blue-600 font-semibold">
+                  Learn more
+                </a>
+              </p>
+            </div>
+          </div>
+          <div className="w-full lg:w-1/2 py-16 px-12">
+            <h2 className="text-3xl mb-4 font-bold">Register</h2>
+            <p className="mb-4">
+              Create your account. It’s free and only takes a minute
+            </p>
+            <form action="#">
+              <div className="grid grid-cols-2 gap-5">
+                <input
+                  type="text"
+                  placeholder="Firstname"
+                  className="border rounded-md border-gray-400 py-1 px-2"
+                />
+                <input
+                  type="text"
+                  placeholder="Surname"
+                  className="border rounded-md border-gray-400 py-1 px-2"
+                />
+              </div>
+              <div className="mt-5">
+                <input
+                  type="text"
+                  placeholder="Email"
+                  className="border rounded-md border-gray-400 py-1 px-2 w-full"
+                />
+              </div>
+              <div className="mt-5">
+                <input
+                  type="password"
+                  placeholder="Password"
+                  className="border rounded-md border-gray-400 py-1 px-2 w-full"
+                />
+              </div>
+              <div className="mt-5">
+                <input
+                  type="password"
+                  placeholder="Confirm Password"
+                  className="border rounded-md border-gray-400 py-1 px-2 w-full"
+                />
+              </div>
+              <div className="mt-5">
+                <input type="checkbox" className="border border-gray-400" />
+                <span>
+                  I accept the{' '}
+                  <a href="#" className="text-blue-600 font-semibold">
+                    Terms of Use
+                  </a>{' '}
+                  &amp;{' '}
+                  <a href="#" className="text-blue-600 font-semibold">
+                    Privacy Policy
+                  </a>
+                </span>
+              </div>
+              <div className="mt-5">
+                <button className="w-full bg-blue-600 py-3 text-center text-white">
+                  Register Now
+                </button>
+                <span>
+                  Already have an Account?{' '}
+                  <RouterLink to="/login" className="text-blue-600 font-semibold">
+                    Login
+                  </RouterLink>
+                </span>
+              </div>
+            </form>
+          </div>
         </div>
-
-        <div className="mb-4">
-            <label for="email" className="block text-gray-700 text-sm font-bold mb-2">Email</label>
-            <input type="email" id="email" name="email" className="w-full border rounded px-3 py-2 focus:outline-none focus:border-blue-500" required></input>
-        </div>
-
-        <div className="mb-4">
-            <label for="password" className="block text-gray-700 text-sm font-bold mb-2">Password</label>
-            <input type="password" id="password" name="password" className="w-full border rounded px-3 py-2 focus:outline-none focus:border-blue-500" required></input>
-        </div>
-
-        <div className="mb-4">
-            <label for="confirm-password" className="block text-gray-700 text-sm font-bold mb-2">Confirm Password</label>
-            <input type="password" id="confirm-password" name="confirm-password" className="w-full border rounded px-3 py-2 focus:outline-none focus:border-blue-500" required></input>
-        </div>
-
-        <button type="submit" className="bg-blue-500 text-white px-4 py-2 rounded hover:bg-blue-600 focus:outline-none focus:shadow-outline-blue">
-            Sign Up
-        </button>
-
-    </form>
-
-</div>
-
-</body>
-
+      </div>
     </div>
-  )
-}
+  );
+};
 
+export default RegisterPage;

@@ -1,5 +1,5 @@
 import React from 'react';
-import { BrowserRouter as Router, Routes, Route } from 'react-router-dom';
+import { BrowserRouter, Routes, Route } from 'react-router-dom';
 import Hero from './frontend/Hero/HeroComponent';
 import SignUp from './frontend/components/signUpPage';
 import Login from './frontend/components/login';
@@ -12,7 +12,7 @@ import Dashboard from './frontend/ProductDashboard/dashboard';
 
 export default function Routing() {
   return (
-    <div>
+    <BrowserRouter>
       <Routes>
         <Route path="/" element={<Hero />} />
         <Route path="/signup" element={<SignUp />} />
@@ -63,6 +63,6 @@ export default function Routing() {
           }
         />
       </Routes>
-    </div>
+    </BrowserRouter>
   );
 }

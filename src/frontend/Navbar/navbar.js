@@ -20,9 +20,9 @@ export default function Navbar() {
           <span className="ml-3 text-xl">ShopSentix</span>
         </a>
         <nav className="md:ml-auto flex flex-wrap items-center text-base justify-center">
-          <a className="mr-5 hover:text-gray-900">Home</a>
-          <a className="mr-5 hover:text-gray-900">Watchlist</a>
-          <a className="mr-5 hover:text-gray-900">History</a>
+          <a href="/home" className="mr-5 hover:text-gray-900">Home</a>
+          <a href="/watchlist" className="mr-5 hover:text-gray-900">Watchlist</a>
+          <a href="/savedfiles" className="mr-5 hover:text-gray-900">History</a>
         </nav>
       </div>
     </header>

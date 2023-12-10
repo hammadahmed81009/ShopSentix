@@ -45,7 +45,7 @@ const Navbar = () => {
             <RouterLink to="/signup" className="py-2 px-3 bg-blue-500 hover:bg-blue-600 text-white rounded transition duration-300">
                 Sign Up
             </RouterLink>
-            <a href="#" className="py-2 px-3 text-blue-500 hover:text-blue-600">
+            <a href="/login" className="py-2 px-3 text-blue-500 hover:text-blue-600">
               Login
             </a>
           </div>
