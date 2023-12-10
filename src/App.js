@@ -1,6 +1,11 @@
 import React from 'react';
-import Routing from './Routing';
+import TablePage from './frontend/TablePage/tablePage';
+import Navbar from './frontend/Navbar/navbar';
 
 export default function App() {
-  return <Routing />;
+  return (
+    <>
+    <Navbar/>
+    </>
+  );
 }
