@@ -1,30 +1,27 @@
-// tablePage.js
 import React, { useState } from "react";
 import ProductCard from "./ProductCard";
 
 export default function TablePage() {
-  const [searchTerm, setSearchTerm] = useState("");
+  const [searchTerm, setSearchTerm] = useState("");  // State to store the current search term
+  const [products, setProducts] = useState([]);     // State to store the fetched product data
 
-  // Replace the sample product data with your actual product data
-  const productData = [
-    {
-      imageUrl: "your-product-image.jpg",
-      productName: "Product 1",
-      price: "99.99",
-      stars: 4, // Add the stars prop here
-    },
-    {
-      imageUrl: "your-product-image.jpg",
-      productName: "Product 2",
-      price: "49.99",
-      stars: 5, // Add the stars prop here
-    },
-    // Add more product data as needed
-  ];
-
-  const filteredProducts = productData.filter((product) =>
-    product.productName.toLowerCase().includes(searchTerm.toLowerCase())
-  );
+  // Function to handle the search button click
+  const handleSearchClick = () => {
+    fetch('http://localhost:3001/search', {         // Make sure to use the correct URL for your Node.js server
+      method: 'POST',
+      headers: {
+        'Content-Type': 'application/json',
+      },
+      body: JSON.stringify({ searchTerm }),         // Send the current search term
+    })
+    .then(response => response.json())
+    .then(data => {
+      setProducts(data.products);                   // Update the products state with the received data
+    })
+    .catch(error => {
+      console.error('Error:', error);
+    });
+  };
 
   return (
     <section className="text-gray-400 bg-white body-font relative">
@@ -43,6 +40,7 @@ export default function TablePage() {
             </div>
             <button
               type="button"
+              onClick={handleSearchClick}
               className="text-white bg-blue-700 hover:bg-blue-800 focus:ring-4 focus:ring-blue-300 font-medium rounded-lg text-sm px-5 py-2.5 me-2 ml-1 mb-2 mt-12 dark:bg-blue-600 dark:hover:bg-blue-700 focus:outline-none dark:focus:ring-blue-800"
             >
               Search
@@ -59,11 +57,15 @@ export default function TablePage() {
       <br />
 
       <div className="container mx-auto">
-        {filteredProducts.map((product, index) => (
-          <div className="mb-8" key={index}>
-            <ProductCard {...product} />
-          </div>
-        ))}
+        {products.length > 0 ? (
+          products.map((product, index) => (
+            <div className="mb-8" key={index}>
+              <ProductCard {...product} />
+            </div>
+          ))
+        ) : (
+          <p className="text-center text-gray-500">No products found. Try a different search.</p>
+        )}
       </div>
     </section>
   );

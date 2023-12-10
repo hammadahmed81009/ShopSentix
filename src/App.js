@@ -5,7 +5,7 @@ import Navbar from './frontend/Navbar/navbar';
 export default function App() {
   return (
     <>
-    <Navbar/>
+    <TablePage/>
     </>
   );
 }

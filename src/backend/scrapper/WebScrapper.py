@@ -16,7 +16,6 @@ def scrape_daraz_products(search_query):
     service = Service(edge_driver_path)
     options = Options()
     options.add_argument(f'user-agent={user_agent}')
-    options.add_argument('--headless')
 
     browser = webdriver.Edge(service=service, options=options)
 
@@ -30,7 +29,7 @@ def scrape_daraz_products(search_query):
     browser.execute_script("window.scrollTo(0, document.body.scrollHeight);")
 
     # Allow time for the additional content to load
-    time.sleep(5)
+    time.sleep(10)
 
     # Use BeautifulSoup for initial parsing
     soup = BeautifulSoup(browser.page_source, 'html.parser')
