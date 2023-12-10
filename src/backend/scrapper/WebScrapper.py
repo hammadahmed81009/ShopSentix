@@ -1,11 +1,12 @@
-# WebScrapper.py
 import sys
 import json
-import base64
 from bs4 import BeautifulSoup
 from selenium import webdriver
 from selenium.webdriver.edge.service import Service
 from selenium.webdriver.edge.options import Options
+from selenium.webdriver.common.by import By
+from selenium.webdriver.support.ui import WebDriverWait
+from selenium.webdriver.support import expected_conditions as EC
 import time
 import os
 
@@ -21,13 +22,17 @@ def scrape_daraz_products(search_query):
     search_url = f'https://www.daraz.pk/catalog/?q={search_query}'
     browser.get(search_url)
 
-    time.sleep(3)
+    # Wait for the page to load
+    WebDriverWait(browser, 10).until(EC.presence_of_element_located((By.CLASS_NAME, 'gridItem--Yd0sa')))
 
-    html_source = browser.page_source
+    # Scroll down to trigger loading more products (if any)
+    browser.execute_script("window.scrollTo(0, document.body.scrollHeight);")
 
-    browser.quit()
+    # Allow time for the additional content to load
+    time.sleep(10)
 
-    soup = BeautifulSoup(html_source, 'html.parser')
+    # Use BeautifulSoup for initial parsing
+    soup = BeautifulSoup(browser.page_source, 'html.parser')
 
     product_cards = soup.find_all('div', class_='gridItem--Yd0sa')
 
@@ -38,9 +43,13 @@ def scrape_daraz_products(search_query):
         product_title = title_element.get_text(strip=True)
         product_url = 'https:' + title_element['href']
 
-        image_element = card.find('div', class_='mainPic--ehOdr').find('img')
-        raw_image_url = image_element.get('src', '') if image_element else 'No image available'
-        image_url = process_image_url(raw_image_url)
+        # Use WebDriverWait to wait for the image element to be visible
+        image_element = WebDriverWait(browser, 10).until(
+            EC.visibility_of_element_located((By.XPATH, './/div[@class="mainPic--ehOdr"]//img'))
+        )
+        
+        # Check if the image URL is in 'src' attribute, otherwise check 'data-src'
+        image_url = image_element.get_attribute('src') or image_element.get_attribute('data-src') or 'No image available'
 
         current_price_element = card.find('div', class_='price--NVB62')
         current_price = current_price_element.find('span', class_='currency--GVKjl').get_text(strip=True) if current_price_element else 'N/A'
@@ -56,32 +65,9 @@ def scrape_daraz_products(search_query):
             'Star Rating': star_rating,
         })
 
+    browser.quit()
+
     print(json.dumps(product_details))
-
-def process_image_url(raw_image_url):
-    if raw_image_url.startswith('//'):
-        if raw_image_url.startswith('https:data:image'):
-            # Handle base64 image data
-            return decode_base64_image(raw_image_url)
-        else:
-            # Handle regular image URL
-            return 'https:' + raw_image_url
-    else:
-        # Return the original image URL
-        return raw_image_url
-
-# Function to decode base64 image data
-def decode_base64_image(data_url):
-    _, base64_data = data_url.split(',', 1)
-    binary_data = base64.b64decode(base64_data)
-
-    # Save the binary data to a file
-    image_filename = 'decoded_image.jpg'
-    with open(image_filename, 'wb') as file:
-        file.write(binary_data)
-
-    return image_filename  # You can return the image filename or the binary_data as needed
-
 
 # Retrieve the search query from command-line arguments
 search_query = sys.argv[1] if len(sys.argv) > 1 else 'default_query'

@@ -1,7 +1,7 @@
 // ProductCard.js
 import React from 'react';
 
-const ProductCard = ({ imageUrl, productName, price, stars }) => {
+const ProductCard = ({ ImageURL, Title, CurrentPrice, stars }) => {
   const renderStars = () => {
     const starArray = Array.from({ length: stars }, (_, index) => index + 1);
 
@@ -25,14 +25,14 @@ const ProductCard = ({ imageUrl, productName, price, stars }) => {
         <div className="flex-shrink-0">
           <img
             className="h-32 w-32 object-cover"
-            src={imageUrl}
+            src={ImageURL}
             alt="Product Image"
           />
         </div>
 
         <div className="p-4 flex-grow">
-          <h2 className="text-xl font-bold mb-2 text-gray-800">{productName}</h2>
-          <p className="text-gray-500 mb-4">{`$${price}`}</p>
+          <h2 className="text-xl font-bold mb-2 text-gray-800">{Title}</h2>
+          <p className="text-gray-500 mb-4">{`${CurrentPrice}`}</p>
         </div>
         <div className="flex-shrink-0 flex items-center justify-center p-4">
           {renderStars()}

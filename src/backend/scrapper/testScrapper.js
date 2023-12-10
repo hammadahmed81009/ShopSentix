@@ -1,37 +1,25 @@
 // testScrapper.js
-const { spawn } = require('child_process');
+const express = require('express');
+const cors = require('cors');
+const { scrapeDarazProducts } = require('./WebScrapper'); // Import the function
 
-const searchQuery = 'huawei+y7';  // Set your desired search query here
+const app = express();
+const port = 3001;
 
-const childPython = spawn('python', ['WebScrapper.py', searchQuery]);
+app.use(cors());
+app.use(express.json());
 
-let pythonOutput = '';
-
-childPython.stdout.on('data', (data) => {
-    pythonOutput += data.toString();
-});
-
-childPython.stderr.on('data', (data) => {
-    console.error(`stderr: ${data}`);
-});
-
-childPython.on('close', (code) => {
-    if (code === 0) {
-        const productDetails = JSON.parse(pythonOutput);
-        const productObject = {
-            products: productDetails
-        };
-        const productJSON = JSON.stringify(productObject);
-
-        // Assuming you have a function to send the JSON to the frontend
-        sendJSONToFrontend(productJSON);
-    } else {
-        console.error(`child process exited with code ${code}`);
+app.post('/search', async (req, res) => {
+    const searchQuery = req.body.searchTerm;
+    try {
+        const productDetails = await scrapeDarazProducts(searchQuery);
+        res.json({ products: productDetails });
+    } catch (error) {
+        console.error('Error during scraping:', error);
+        res.status(500).send('Error during scraping');
     }
 });
 
-// Function to send the JSON to the frontend (replace this with your actual logic)
-function sendJSONToFrontend(jsonData) {
-    console.log(jsonData);
-    // Implement your logic to send jsonData to the frontend
-}
+app.listen(port, () => {
+    console.log(`Server listening at http://localhost:${port}`);
+});
