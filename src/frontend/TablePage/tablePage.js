@@ -1,12 +1,15 @@
-import React, { useState } from "react";
+import React, { useState, useEffect } from "react";
 import ProductCard from "./ProductCard";
 
 export default function TablePage() {
   const [searchTerm, setSearchTerm] = useState("");  // State to store the current search term
   const [products, setProducts] = useState([]);     // State to store the fetched product data
+  const [loading, setLoading] = useState(false);    // Loading state
 
   // Function to handle the search button click
   const handleSearchClick = () => {
+    setLoading(true); // Set loading to true before fetching data
+
     fetch('http://localhost:3001/search', {         // Make sure to use the correct URL for your Node.js server
       method: 'POST',
       headers: {
@@ -16,12 +19,18 @@ export default function TablePage() {
     })
     .then(response => response.json())
     .then(data => {
-      setProducts(data.products);                   // Update the products state with the received data
+      setProducts(data.products || []);            // Update the products state with the received data or an empty array
+      setLoading(false);                           // Set loading to false after data is fetched
     })
     .catch(error => {
       console.error('Error:', error);
+      setLoading(false);                           // Set loading to false in case of an error
     });
   };
+
+  useEffect(() => {
+    // You can include additional logic for initial data fetching here if needed
+  }, []); // Empty dependency array means this effect runs once when the component mounts
 
   return (
     <section className="text-gray-400 bg-white body-font min-h-screen relative">
@@ -57,14 +66,18 @@ export default function TablePage() {
       <br />
 
       <div className="container mx-auto">
-        {products.length > 0 ? (
-          products.map((product, index) => (
-            <div className="mb-8" key={index}>
-              <ProductCard {...product} />
-            </div>
-          ))
+        {loading ? (
+          <p className="text-center text-gray-500">Loading...</p>
         ) : (
-          <p className="text-center text-gray-500">No products found. Try a different search.</p>
+          Array.isArray(products) && products.length > 0 ? (
+            products.map((product, index) => (
+              <div className="mb-8" key={index}>
+                <ProductCard {...product} />
+              </div>
+            ))
+          ) : (
+            <p className="text-center text-gray-500">No products found. Try a different search.</p>
+          )
         )}
       </div>
     </section>

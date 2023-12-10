@@ -22,6 +22,12 @@ async function scrapeDarazProducts(searchQuery) {
   // Allow time for the additional content to load
   await page.waitForTimeout(10000);
 
+  // Wait for all images to be loaded
+  await page.waitForFunction(() => {
+    const images = document.querySelectorAll('.mainPic--ehOdr img');
+    return Array.from(images).every((img) => img.complete);
+  });
+
   // Extract product details
   const productDetails = await page.evaluate(() => {
     const products = Array.from(document.querySelectorAll('.gridItem--Yd0sa'));
@@ -43,16 +49,18 @@ async function scrapeDarazProducts(searchQuery) {
       return {
         Title: productTitle,
         URL: productUrl,
-        'Image URL': imageUrl,
-        'Current Price': currentPrice,
-        'Star Rating': starRating,
+        ImageURL: imageUrl,
+        CurrentPrice: currentPrice,
+        stars: starRating,
       };
     });
   });
 
   await browser.close();
 
-  console.log(JSON.stringify(productDetails));
+  // Return the scraped data
+  return productDetails;
 }
+
 // Export the function for use in other files
 module.exports.scrapeDarazProducts = scrapeDarazProducts;
