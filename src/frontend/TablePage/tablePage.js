@@ -1,29 +1,47 @@
 // tablePage.js
-import React, { useState } from "react";
+import React, { useState, useEffect } from "react";
 import ProductCard from "./ProductCard";
+import { scrapeDarazProducts } from "../../../WebScrapper"; 
 
 export default function TablePage() {
   const [searchTerm, setSearchTerm] = useState("");
+  const [productData, setProductData] = useState([]);
 
-  // Replace the sample product data with your actual product data
-  const productData = [
-    {
-      imageUrl: "your-product-image.jpg",
-      productName: "Product 1",
-      price: "99.99",
-      stars: 4, // Add the stars prop here
-    },
-    {
-      imageUrl: "your-product-image.jpg",
-      productName: "Product 2",
-      price: "49.99",
-      stars: 5, // Add the stars prop here
-    },
-    // Add more product data as needed
-  ];
+  useEffect(() => {
+    const fetchData = async () => {
+      try {
+        // Pass the search term to the scraper function
+        const scrapedData = await scrapeDarazProducts(searchTerm);
+        setProductData(scrapedData);
+      } catch (error) {
+        console.error("Error fetching data:", error);
+      }
+    };
+
+    if (searchTerm.trim() !== "") {
+      fetchData();
+    }
+  }, [searchTerm]);
+
+  const renderStars = (stars) => {
+    const starArray = Array.from({ length: stars }, (_, index) => index + 1);
+
+    return starArray.map((star) => (
+      <svg
+        key={star}
+        className="w-4 h-4 text-yellow-300 me-1 ml-0.5"
+        aria-hidden="true"
+        xmlns="http://www.w3.org/2000/svg"
+        fill="currentColor"
+        viewBox="0 0 22 20"
+      >
+        <path d="M20.924 7.625a1.523 1.523 0 0 0-1.238-1.044l-5.051-.734-2.259-4.577a1.534 1.534 0 0 0-2.752 0L7.365 5.847l-5.051.734A1.535 1.535 0 0 0 1.463 9.2l3.656 3.563-.863 5.031a1.532 1.532 0 0 0 2.226 1.616L11 17.033l4.518 2.375a1.534 1.534 0 0 0 2.226-1.617l-.863-5.03L20.537 9.2a1.523 1.523 0 0 0 .387-1.575Z" />
+      </svg>
+    ));
+  };
 
   const filteredProducts = productData.filter((product) =>
-    product.productName.toLowerCase().includes(searchTerm.toLowerCase())
+    product.Title.toLowerCase().includes(searchTerm.toLowerCase())
   );
 
   return (
@@ -61,7 +79,12 @@ export default function TablePage() {
       <div className="container mx-auto">
         {filteredProducts.map((product, index) => (
           <div className="mb-8" key={index}>
-            <ProductCard {...product} />
+            <ProductCard
+              imageUrl={product.ImageURL}  // Update with the actual attribute names from your scraper
+              productName={product.Title}
+              price={product.CurrentPrice}
+              stars={product.StarRating}
+            />
           </div>
         ))}
       </div>
