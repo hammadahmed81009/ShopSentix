@@ -4,13 +4,31 @@ export default function Section4() {
   return (
     <section
       id="section4"
-      className="flex items-center justify-center mt-10 pb-10"
+      className="flex items-center justify-center mt-0 pb-10 relative overflow-hidden"
     >
       <div
         className="p-4 sm:px-10 flex flex-col justify-center items-center text-base h-100vh mx-auto"
         id="pricing"
       >
-        <h3 className="text-5xl font-bold text-center flex gap-2 justify-center mb-10">
+        {/* Black circle background */}
+        <div className="absolute left-12 bottom-8 transform translate-y-1/2 -translate-x-1/2 w-64 h-64 bg-black rounded-full"></div>
+        {/* Blue circle background */}
+        <div className="absolute left-32 bottom-28 transform translate-y-1/2 -translate-x-1/2 w-32 h-32 bg-blue-600 rounded-full"></div>
+        {/*Blue Decorative Circle*/}
+        <div className="absolute right-12 top-4 transform -translate-y-1/2 translate-x-1/2 w-64 h-64 bg-blue-500 rounded-full overflow-hidden">
+          <div className="absolute left-0 right-0 bottom-0 h-64 bg-blue-500"></div>
+        </div>
+
+        <div className="absolute right-32 top-28 transform -translate-y-1/2 translate-x-1/2 w-36 h-36 bg-blue-500 rounded-full overflow-hidden">
+          <div className="absolute left-0 right-0 bottom-0 h-64 bg-black"></div>
+        </div>
+         {/* Black bars background */}
+         <div className="absolute left-8 top-1 transform -translate-y-1/4 flex items-center space-x-2">
+          <div className="w-2 h-40 bg-blue-600"></div>
+          <div className="w-2 h-32 bg-black"></div>
+          <div className="w-2 h-24 bg-blue-600"></div>
+        </div>
+        <h3 className="text-5xl font-bold text-center flex gap-2 mt-10 justify-center mb-10">
           Pay once, use forever
         </h3>
         <div

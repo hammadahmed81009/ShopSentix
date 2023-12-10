@@ -7,18 +7,15 @@ import slideImage3 from '../Resources/slideImage3.jpg';
 const options = [
   {
     name: 'Accurate Results for your Product',
-    imageSrc:
-      slideImage1,
+    imageSrc: slideImage1,
   },
   {
     name: 'More than One Format',
-    imageSrc:
-    slideImage2,
+    imageSrc: slideImage2,
   },
   {
     name: 'Saved PDFs',
-    imageSrc:
-    slideImage3,
+    imageSrc: slideImage3,
   },
 ];
 
@@ -27,15 +24,19 @@ const Page = () => {
   const [activeImageSrc, setActiveImageSrc] = useState(options[0].imageSrc);
 
   return (
-    <section id="section2">
-      <div className="flex h-screen items-stretch overflow-hidden relative">
+    <section id="section2" className="relative h-screen">
+      <div className="flex items-stretch overflow-hidden relative h-full">
         {/* Blue circle background */}
-        <div className="absolute left-12 bottom-10 transform translate-y-1/2 -translate-x-1/2 w-64 h-64 bg-black rounded-full"></div>
-        {/* Black bars background */}
-        <div className="absolute right-1/2 top-1/6 transform -translate-y-1/4 -translate-x-1/2 flex items-center space-x-2">
-          <div className="w-2 h-24 bg-blue-600"></div>
-          <div className="w-2 h-32 bg-black"></div>
-          <div className="w-2 h-40 bg-blue-600"></div>
+        <div className="hidden lg:block absolute inset-0 ">
+          <div className="absolute left-12 bottom-10 transform translate-y-1/2 -translate-x-1/2 w-64 h-64 bg-black rounded-full"></div>
+          {/* Black circle background */}
+          <div className="absolute left-32 bottom-28 transform translate-y-1/2 -translate-x-1/2 w-36 h-36 bg-blue-500 rounded-full"></div>
+          {/* Black bars background */}
+          <div className="absolute right-1/2 top-1/6 transform -translate-y-1/4 -translate-x-1/2 flex items-center space-x-2">
+            <div className="w-2 h-24 bg-blue-600"></div>
+            <div className="w-2 h-32 bg-black"></div>
+            <div className="w-2 h-40 bg-blue-600"></div>
+          </div>
         </div>
         <div className="w-1/2 p-16 bg-white">
           <div className="mb-20">
@@ -80,9 +81,6 @@ const Page = () => {
             style={{ opacity: activeImageSrc ? 1 : 0 }}
           />
         </div>
-
-        {/* Black circle background */}
-        <div className="absolute left-32 bottom-28 transform translate-y-1/2 -translate-x-1/2 w-36 h-36 bg-blue-500 rounded-full"></div>
       </div>
     </section>
   );
