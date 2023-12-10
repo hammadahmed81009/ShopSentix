@@ -26,7 +26,7 @@ export default function SavedFiles() {
       <br></br>
       <br></br>
       <br></br>
-        <div className="container mx-auto mt-8">
+        <div className="container mx-auto min-h-screen mt-8">
       <h1 className="text-3xl font-semibold mb-6">Saved Files</h1>
       <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-6">
         {products.map((product, index) => (
