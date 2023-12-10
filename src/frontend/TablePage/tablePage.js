@@ -27,7 +27,7 @@ export default function TablePage() {
   );
 
   return (
-    <section className="text-gray-400 bg-white body-font relative">
+    <section className="text-gray-400 bg-white body-font min-h-screen relative">
       <div className="container px-5 mt-24 mx-auto">
         <div className="lg:w-1/2 md:w-2/3 mx-auto">
           <div className="flex items-center">

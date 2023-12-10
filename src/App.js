@@ -1,11 +1,10 @@
 import React from 'react';
-import TablePage from './frontend/TablePage/tablePage';
-import Navbar from './frontend/Navbar/navbar';
+import Routing from './Routing'
 
 export default function App() {
   return (
     <>
-    <Navbar/>
+    <Routing/>
     </>
   );
 }
