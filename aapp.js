@@ -26,6 +26,7 @@ app.post('/login', async (req, res) => {
       }
     } else {
       res.json('notexist');
+      console.log("User Logged In");
     }
   } catch (e) {
     console.error(e);
@@ -53,6 +54,7 @@ app.post('/signup', async (req, res) => {
       });
 
       res.json('notexist');
+      console.log("User Registered");
     }
   } catch (e) {
     console.error(e);
