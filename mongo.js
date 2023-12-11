@@ -1,10 +1,10 @@
 const mongoose=require("mongoose")
-mongoose.connect("mongodb://0.0.0.0:27017/shopsentix")
+mongoose.connect("mongodb+srv://hammadahmed0394:lhrfscem1881009@cluster0.sjuramg.mongodb.net/shopsentix", { useNewUrlParser: true, useUnifiedTopology: true })
 .then(()=>{
     console.log("mongodb connected");
 })
 .catch(()=>{
-    console.log('failed');
+    console.log('failed to connect to database');
 })
 
 
