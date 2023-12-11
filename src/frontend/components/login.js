@@ -1,55 +1,63 @@
-import React, { useEffect, useState } from 'react';
-import axios from 'axios';
-import { useNavigate } from 'react-router-dom';
-import image from '../Resources/Register-Background.png'; // Replace with the correct path to your image
-import googleSVG from '../Resources/google.svg';
-import { Link as RouterLink } from 'react-router-dom';
 import React, { useState } from "react";
 import axios from "axios";
 import { useNavigate } from "react-router-dom";
 import image from "../Resources/Register-Background.png";
 import googleSVG from "../Resources/google.svg";
 import { Link as RouterLink } from "react-router-dom";
-import Modal from "./Modal";
+import Modal from "./Modal"; // Import the Modal component
 
 const LoginComponent = () => {
   const history = useNavigate();
 
-  const [email, setEmail] = useState('');
-  const [password, setPassword] = useState('');
+  const [email, setEmail] = useState("");
+  const [password, setPassword] = useState("");
+  const [isModalOpen, setModalOpen] = useState(false);
+  const [modalMessageType, setModalMessageType] = useState("");
+  const [alertContent, setAlertContent] = useState(null);
+
+  
+  const openModal = (messageType) => {
+    setModalMessageType(messageType);
+    setModalOpen(true);
+  };
+
+  const closeModal = () => {
+    setModalOpen(false);
+  };
 
   async function submit(e) {
     e.preventDefault();
 
     try {
       await axios
-        .post('http://localhost:8000/login', {
+        .post("http://localhost:8000/login", {
           email,
           password,
         })
         .then((res) => {
-          if (res.data == 'exist') {
-            history('/home', { state: { id: email } });
-          } else if (res.data === 'notexist') {
-            alert('User has not signed up');
-          } else if (res.data === 'wrongpassword') {
-            alert('Incorrect password');
+          if (res.data === "exist") {
+            history("/home", { state: { id: email } });
+          } else if (res.data === "notexist") {
+            openModal("User Not Found");
+          } else if (res.data === "wrongpassword") {
+            openModal("Wrong Password");
           } else {
-            alert('Unknown error occurred');
+            openModal("Unexpected Error");
           }
         })
         .catch((e) => {
-          alert('wrong details');
+          openModal("Unexpected Error");
           console.log(e);
         });
     } catch (e) {
       console.log(e);
     }
   }
+
   return (
     <div
       className="flex items-center justify-center min-h-screen bg-gray-100"
-      style={{ backgroundImage: 'linear-gradient(115deg, #3498db, #8e44ad)' }}
+      style={{ backgroundImage: "linear-gradient(115deg, #3498db, #8e44ad)" }}
     >
       <div className="relative flex flex-col m-6 space-y-8 bg-white shadow-2xl rounded-2xl md:flex-row md:space-y-0">
         {/* Left side */}
@@ -93,10 +101,14 @@ const LoginComponent = () => {
             <span className="font-bold text-md">Forgot password</span>
           </div>
           <RouterLink>
-            <button onClick={submit} className="w-full bg-blue-600 text-white p-2 rounded-lg mb-6 hover:bg-white hover:text-blue-600 hover:border hover:border-blue-600">
+            <button
+              onClick={submit}
+              className="w-full bg-blue-600 text-white p-2 rounded-lg mb-6 hover:bg-white hover:text-blue-600 hover:border hover:border-blue-600"
+            >
               Sign in
             </button>
           </RouterLink>
+          {alertContent && <div>{alertContent}</div>}
           <button className="w-full border border-gray-300 text-md p-2 rounded-lg mb-6 hover:bg-blue-600 hover:text-white">
             <img src={googleSVG} alt="img" className="w-6 h-6 inline mr-2" />
             Sign in with Google
@@ -117,6 +129,11 @@ const LoginComponent = () => {
           />
         </div>
       </div>
+      <Modal
+        isOpen={isModalOpen}
+        closeModal={closeModal}
+        messageType={modalMessageType}
+      />
     </div>
   );
 };
