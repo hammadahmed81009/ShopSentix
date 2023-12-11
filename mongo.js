@@ -7,16 +7,7 @@ mongoose.connect("mongodb+srv://hammadahmed0394:lhrfscem1881009@cluster0.sjuramg
     console.log('failed to connect to database');
 })
 
-
-const newSchema = new mongoose.Schema({
-    firstname:{
-        type:String,
-        required:true
-    },
-    surname:{
-        type:String,
-        required:true
-    },
+const newSchema=new mongoose.Schema({
     email:{
         type:String,
         required:true
