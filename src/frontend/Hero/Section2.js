@@ -24,10 +24,10 @@ const Page = () => {
   const [activeImageSrc, setActiveImageSrc] = useState(options[0].imageSrc);
 
   return (
-    <section id="section2" className="relative h-screen">
-      <div className="flex items-stretch overflow-hidden relative h-full">
+    <section id="section2">
+      <div className="flex h-screen items-stretch overflow-hidden relative">
         {/* Blue circle background */}
-        <div className="hidden lg:block absolute inset-0 ">
+        <div className="hidden lg:block absolute inset-0">
           <div className="absolute left-12 bottom-10 transform translate-y-1/2 -translate-x-1/2 w-64 h-64 bg-black rounded-full"></div>
           {/* Black circle background */}
           <div className="absolute left-32 bottom-28 transform translate-y-1/2 -translate-x-1/2 w-36 h-36 bg-blue-500 rounded-full"></div>
