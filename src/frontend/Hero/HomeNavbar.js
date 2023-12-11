@@ -1,6 +1,7 @@
 import React, { useState } from 'react';
 import { Link as ScrollLink } from 'react-scroll';
 import { Link as RouterLink } from 'react-router-dom';
+import Logo from '../Resources/logo3.png';
 
 const Navbar = () => {
   const [active, setActive] = useState('Highlights'); // State to track active item
@@ -13,10 +14,19 @@ const Navbar = () => {
   const sectionIds = ['section2', 'section3', 'section4', 'section6'];
   return (
     <nav className="bg-white fixed top-0 left-0 w-full z-50">
-      <div className="max-w-6xl mx-auto px-4">
+      <div className="max-w-8xl mx-auto px-4">
         <div className="flex justify-between items-center h-16">
           {/* Logo or Brand Name */}
-          <div>{/* Put your logo or brand name here */}</div>
+
+          <div>
+            <ScrollLink to="/" smooth={true} duration={500}>
+              <img
+                src={Logo}
+                alt="ShopSentix Logo"
+                className="max-w-[100px] max-h-[55px] ml-12"
+              />
+            </ScrollLink>
+          </div>
 
           {/* Primary Navbar items centered */}
           <div className="flex-grow md:flex items-center justify-center space-x-1">
@@ -42,10 +52,16 @@ const Navbar = () => {
 
           {/* Secondary Navbar Items */}
           <div className="hidden md:flex items-center space-x-1 ml-auto">
-            <RouterLink to="/signup" className="py-2 px-3 bg-blue-500 hover:bg-blue-600 text-white rounded transition duration-300">
-                Sign Up
+            <RouterLink
+              to="/signup"
+              className="py-2 px-3 bg-blue-500 hover:bg-blue-600 text-white rounded transition duration-300"
+            >
+              Sign Up
             </RouterLink>
-            <a href="/login" className="py-2 px-3 text-blue-500 hover:text-blue-600">
+            <a
+              href="/login"
+              className="py-2 px-3 text-blue-500 hover:text-blue-600"
+            >
               Login
             </a>
           </div>

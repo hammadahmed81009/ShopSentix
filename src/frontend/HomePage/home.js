@@ -1,9 +1,10 @@
 import React from 'react';
 import { Link as RouterLink } from 'react-router-dom';
+import Logo from '../Resources/logo3.png';
 
 export default function Home() {
   return (
-    <section className="text-gray-400 bg-white body-font min-h-screen relative">
+    <section className="text-gray-400 bg-white body-font min-h-screen relative overflow-hidden">
       {/*Blue Decorative Circle*/}
       <div className="absolute right-12 top-20 transform -translate-y-1/2 translate-x-1/2 w-64 h-64 bg-blue-500 rounded-full overflow-hidden">
         <div className="absolute left-0 right-0 bottom-0 h-64 bg-blue-500"></div>
@@ -20,10 +21,12 @@ export default function Home() {
         <div className="w-2 h-24 bg-blue-600"></div>
       </div>
       <div className="container px-5 py-24 mx-auto">
-        <div className="flex flex-col text-center w-full mb-12">
-          <h1 className="sm:text-3xl text-2xl font-medium title-font mb-4 text-black">
-            LOGO
-          </h1>
+        <div className="flex flex-col items-center text-center w-full mb-4">
+          <img
+            src={Logo}
+            alt="ShopSentix Logo"
+            className="max-w-[100px] max-h-[100px] mb-4 mx-auto mt-12"
+          />
           <p className="lg:w-2/3 mx-auto leading-relaxed text-base">
             Discover sentiments on-demand. Enter a product name to unveil
             real-time insights

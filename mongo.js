@@ -8,7 +8,15 @@ mongoose.connect("mongodb://0.0.0.0:27017/shopsentix")
 })
 
 
-const newSchema=new mongoose.Schema({
+const newSchema = new mongoose.Schema({
+    firstname:{
+        type:String,
+        required:true
+    },
+    surname:{
+        type:String,
+        required:true
+    },
     email:{
         type:String,
         required:true

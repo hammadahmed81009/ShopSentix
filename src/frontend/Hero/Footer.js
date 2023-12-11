@@ -1,4 +1,5 @@
 import React from 'react';
+import Logo from '../Resources/logo3bgremoved.png';
 
 const Footer = ({
   companyName,
@@ -12,18 +13,11 @@ const Footer = ({
       <div className="container px-5 py-24 mx-auto flex md:items-center lg:items-start md:flex-row md:flex-nowrap flex-wrap flex-col">
         <div className="w-64 flex-shrink-0 md:mx-0 mx-auto text-center md:text-left">
           <a className="flex title-font font-medium items-center md:justify-start justify-center text-white">
-            <svg
-              xmlns="http://www.w3.org/2000/svg"
-              fill="none"
-              stroke="currentColor"
-              stroke-linecap="round"
-              stroke-linejoin="round"
-              stroke-width="2"
-              className="w-10 h-10 text-white p-2 bg-blue-500 rounded-full"
-              viewBox="0 0 24 24"
-            >
-              <path d="M12 2L2 7l10 5 10-5-10-5zM2 17l10 5 10-5M2 12l10 5 10-5"></path>
-            </svg>
+          <img
+            src={Logo}
+            alt="ShopSentix Logo"
+            className="max-w-[80px] max-h-[80px] mb-4 mx-auto"
+          />
             <span className="ml-3 text-xl">{companyName}</span>
           </a>
           <p className="mt-2 text-sm text-gray-500">{companyDescription}</p>
