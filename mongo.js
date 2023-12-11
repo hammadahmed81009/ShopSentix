@@ -7,7 +7,6 @@ mongoose.connect("mongodb://0.0.0.0:27017/shopsentix")
     console.log('failed');
 })
 
-
 const newSchema=new mongoose.Schema({
     email:{
         type:String,

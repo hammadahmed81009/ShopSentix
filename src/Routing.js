@@ -10,6 +10,7 @@ import Watchlist from './frontend/WatchlistPage/watchlistPage';
 import SavedFiles from './frontend/components/savedFiles';
 import TablePage from './frontend/TablePage/tablePage';
 import Dashboard from './frontend/ProductDashboard/dashboard';
+import VerificationPage from './frontend/components/verfication';
 
 export default function Routing() {
   return (
@@ -18,6 +19,7 @@ export default function Routing() {
         <Route path="/" element={<Hero />} />
         <Route path="/signup" element={<SignUp />} />
         <Route path="/login" element={<Login />} />
+        <Route path="/verification/:email" element={<VerificationPage />} />
         <Route
           path="/home"
           element={

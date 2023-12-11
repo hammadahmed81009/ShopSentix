@@ -4,6 +4,13 @@ import { useNavigate } from 'react-router-dom';
 import image from '../Resources/Register-Background.png'; // Replace with the correct path to your image
 import googleSVG from '../Resources/google.svg';
 import { Link as RouterLink } from 'react-router-dom';
+import React, { useState } from "react";
+import axios from "axios";
+import { useNavigate } from "react-router-dom";
+import image from "../Resources/Register-Background.png";
+import googleSVG from "../Resources/google.svg";
+import { Link as RouterLink } from "react-router-dom";
+import Modal from "./Modal";
 
 const LoginComponent = () => {
   const history = useNavigate();

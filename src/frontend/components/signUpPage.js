@@ -1,48 +1,78 @@
-import React, { useEffect, useState } from "react"
-import axios from "axios"
-import { useNavigate, Link } from "react-router-dom"
-import image from '../Resources/Register-Background.png';
-import { Link as RouterLink } from 'react-router-dom';
+import React, { useEffect, useState } from "react";
+import axios from "axios";
+import { useNavigate, Link } from "react-router-dom";
+import image from "../Resources/Register-Background.png";
+import { Link as RouterLink } from "react-router-dom";
+import Loader from "./Loader";
+import Modal from "./Modal";
 
 const RegisterPage = () => {
-  const history=useNavigate();
+  const history = useNavigate();
 
-  const [email,setEmail]=useState('')
-  const [password,setPassword]=useState('')
+  const [email, setEmail] = useState("");
+  const [password, setPassword] = useState("");
+  const [loading, setLoading] = useState(false);
+  const [modalOpen, setModalOpen] = useState(false);
+  const [modalMessageType, setModalMessageType] = useState("");
 
-  async function submit(e){
-      e.preventDefault();
+  const openModal = (messageType) => {
+    setModalMessageType(messageType);
+    setModalOpen(true);
+  };
 
-      try{
+  const closeModal = () => {
+    setModalOpen(false);
+  };
 
-          await axios.post("http://localhost:8000/signup",{
-              email,password
-          })
-          .then(res=>{
-              if(res.data=="exist"){
-                  alert("User already exists")
-              }
-              else if(res.data=="notexist"){
-                  history("/home",{state:{id:email}})
-              }
-          })
-          .catch(e=>{
-              alert("wrong details")
-              console.log(e);
-          })
+  async function submit(e) {
+    e.preventDefault();
 
+    try {
+      setLoading(true);
+
+      const response = await axios.post("http://localhost:8000/signup", {
+        email,
+        password,
+      });
+
+      if (response.data.includes("notexist")) {
+        const verificationResponse = await axios.post(
+          "http://localhost:8000/send-verification-email",
+          {
+            email,
+          }
+        );
+
+        if (verificationResponse.status === 200) {
+          setLoading(false);
+          history(`/verification/${email}`);
+        } else {
+          setLoading(false);
+          openModal("Error Sending Verification Email");
+        }
+      } else if (response.data === "exist") {
+        setLoading(false);
+        openModal("User Already Exists");
       }
-      catch(e){
-          console.log(e);
-
-      }
-
+    } catch (e) {
+      setLoading(false);
+      openModal("Wrong Details");
+      console.log(e);
+    }
   }
+
+  useEffect(() => {
+    setLoading(false);
+  }, []);
 
   return (
     <div
       className="h-screen py-20"
-      style={{ backgroundImage: 'linear-gradient(115deg, #3498db, #8e44ad)' }}
+      style={{
+        backgroundImage: "linear-gradient(115deg, #3498db, #8e44ad)",
+        margin: 0,
+        padding: 0,
+      }}
     >
       <div className="container mx-auto">
         <div className="flex flex-col lg:flex-row w-10/12 lg:w-8/12 bg-white rounded-xl mx-auto shadow-lg overflow-hidden">
@@ -54,7 +84,7 @@ const RegisterPage = () => {
             <div>
               <p className="text-white">
                 Lorem ipsum dolor sit amet, consectetur adipiscing elit. Aenean
-                suspendisse aliquam varius rutrum purus maecenas ac{' '}
+                suspendisse aliquam varius rutrum purus maecenas ac{" "}
                 <a href="#" className="text-blue-600 font-semibold">
                   Learn more
                 </a>
@@ -82,7 +112,9 @@ const RegisterPage = () => {
               <div className="mt-5">
                 <input
                   type="email"
-                  onChange={(e) => { setEmail(e.target.value) }}
+                  onChange={(e) => {
+                    setEmail(e.target.value);
+                  }}
                   placeholder="Email"
                   className="border rounded-md border-gray-400 py-1 px-2 w-full"
                 />
@@ -90,7 +122,9 @@ const RegisterPage = () => {
               <div className="mt-5">
                 <input
                   type="password"
-                  onChange={(e) => { setPassword(e.target.value) }}
+                  onChange={(e) => {
+                    setPassword(e.target.value);
+                  }}
                   placeholder="Password"
                   className="border rounded-md border-gray-400 py-1 px-2 w-full"
                 />
@@ -105,23 +139,40 @@ const RegisterPage = () => {
               <div className="mt-5">
                 <input type="checkbox" className="border border-gray-400" />
                 <span>
-                  I accept the{' '}
+                  I accept the{" "}
                   <a href="#" className="text-blue-600 font-semibold">
                     Terms of Use
-                  </a>{' '}
-                  &amp;{' '}
+                  </a>{" "}
+                  &amp;{" "}
                   <a href="#" className="text-blue-600 font-semibold">
                     Privacy Policy
                   </a>
                 </span>
               </div>
               <div className="mt-5">
-                <button onClick={ submit } className="w-full bg-blue-600 py-3 text-center text-white">
-                  Register Now
-                </button>
+              {modalOpen && (
+              <Modal
+                isOpen={modalOpen}
+                closeModal={closeModal}
+                messageType={modalMessageType}
+              />
+            )}
+                {loading ? (
+                  <Loader />
+                ) : (
+                  <button
+                    onClick={submit}
+                    className="w-full bg-blue-600 py-3 text-center text-white"
+                  >
+                    Register Now
+                  </button>
+                )}
                 <span>
-                  Already have an Account?{' '}
-                  <RouterLink to="/login" className="text-blue-600 font-semibold">
+                  Already have an Account?{" "}
+                  <RouterLink
+                    to="/login"
+                    className="text-blue-600 font-semibold"
+                  >
                     Login
                   </RouterLink>
                 </span>
