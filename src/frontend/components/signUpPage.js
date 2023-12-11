@@ -11,6 +11,8 @@ const RegisterPage = () => {
 
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
+  const [firstName, setFirstName] = useState(""); 
+  const [surname, setSurname] = useState("");
   const [loading, setLoading] = useState(false);
   const [modalOpen, setModalOpen] = useState(false);
   const [modalMessageType, setModalMessageType] = useState("");

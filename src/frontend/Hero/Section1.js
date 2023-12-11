@@ -1,5 +1,5 @@
 import React from 'react';
-import backgroundImage from '../Resources/Hero1.jpg'; // Replace with your image file
+import backgroundImage from '../Resources/HomeBackground.jpg'; // Replace with your image file
 
 const HeroSection = () => {
     return (
