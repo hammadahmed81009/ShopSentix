@@ -25,7 +25,7 @@ const Page = () => {
 
   return (
     <section id="section2">
-      <div className="flex h-screen items-stretch overflow-hidden relative">
+      <div className="flex h-screen items-stretch overflow-hidden relative bg-white">
         {/* Blue circle background */}
         <div className="hidden lg:block absolute inset-0">
           <div className="absolute left-12 bottom-10 transform translate-y-1/2 -translate-x-1/2 w-64 h-64 bg-black rounded-full"></div>
@@ -38,7 +38,7 @@ const Page = () => {
             <div className="w-2 h-40 bg-blue-600"></div>
           </div>
         </div>
-        <div className="w-1/2 p-16 bg-white">
+        <div className="w-1/2 p-16 z-10">
           <div className="mb-20">
             <h1 className="text-4xl font-extrabold text-black inline-block">
               What We Have For You

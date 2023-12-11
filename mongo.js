@@ -8,7 +8,15 @@ mongoose.connect("mongodb+srv://hammadahmed0394:lhrfscem1881009@cluster0.sjuramg
 })
 
 
-const newSchema=new mongoose.Schema({
+const newSchema = new mongoose.Schema({
+    firstname:{
+        type:String,
+        required:true
+    },
+    surname:{
+        type:String,
+        required:true
+    },
     email:{
         type:String,
         required:true

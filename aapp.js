@@ -35,7 +35,7 @@ app.post('/login', async (req, res) => {
 });
 
 app.post('/signup', async (req, res) => {
-  const { email, password } = req.body;
+  const { firstname, surname, email, password } = req.body;
 
   try {
     // Check if the email already exists
@@ -49,6 +49,8 @@ app.post('/signup', async (req, res) => {
 
       // Store the hashed password in the database
       await collection.insertMany({
+        firstname: firstname,
+        surname: surname,
         email: email,
         password: hashedPassword,
       });

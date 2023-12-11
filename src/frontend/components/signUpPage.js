@@ -7,6 +7,8 @@ import { Link as RouterLink } from 'react-router-dom';
 const RegisterPage = () => {
   const history=useNavigate();
 
+  const [firstname,setFirstName]=useState('')
+  const [surname,setSurname]=useState('')
   const [email,setEmail]=useState('')
   const [password,setPassword]=useState('')
 
@@ -16,7 +18,7 @@ const RegisterPage = () => {
       try{
 
           await axios.post("http://localhost:8000/signup",{
-              email,password
+              firstname,surname,email,password
           })
           .then(res=>{
               if(res.data=="exist"){
@@ -71,11 +73,13 @@ const RegisterPage = () => {
                 <input
                   type="text"
                   placeholder="Firstname"
+                  onChange={(e) => { setFirstName(e.target.value) }}
                   className="border rounded-md border-gray-400 py-1 px-2"
                 />
                 <input
                   type="text"
                   placeholder="Surname"
+                  onChange={(e) => { setSurname(e.target.value) }}
                   className="border rounded-md border-gray-400 py-1 px-2"
                 />
               </div>
