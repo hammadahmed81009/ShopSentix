@@ -13,6 +13,8 @@ const Modal = ({ isOpen, closeModal, messageType }) => {
         return "Error";
       case "Wrong Details":
         return "Error";
+      case "Password and confirm password do not match":
+        return "Password Match Error";
       default:
         return "Modal Title";
     }
@@ -30,6 +32,8 @@ const Modal = ({ isOpen, closeModal, messageType }) => {
         return "Please agree to the Terms of Use and Privacy Policy";
       case "Wrong Details":
         return "Wrong Details";
+      case "Password and confirm password do not match":
+        return "Password and confirm password do not match";
       default:
         return "Default message goes here.";
     }

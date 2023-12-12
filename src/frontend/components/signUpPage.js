@@ -11,6 +11,7 @@ const RegisterPage = () => {
 
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
+  const [confirmPassword, setConfirmPassword] = useState("");
   const [firstName, setFirstName] = useState("");
   const [surname, setSurname] = useState("");
   const [loading, setLoading] = useState(false);
@@ -38,6 +39,12 @@ const RegisterPage = () => {
       openModal("Please agree to the Terms of Use and Privacy Policy");
       return;
     }
+
+    if (password !== confirmPassword) {
+      openModal("Password and confirm password do not match");
+      return;
+    }
+
     try {
       setLoading(true);
 
