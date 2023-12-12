@@ -1,8 +1,11 @@
-import React from 'react';
-import { Link as RouterLink } from 'react-router-dom';
-import Logo from '../Resources/logo3.png';
+import React from "react";
+import { Link as RouterLink } from "react-router-dom";
+import Logo from "../Resources/logo3.png";
+import { useState } from "react";
 
 export default function Home() {
+  const [searchTerm, setSearchTerm] = useState("");
+
   return (
     <section className="text-gray-400 bg-white body-font min-h-screen relative overflow-hidden">
       {/*Blue Decorative Circle*/}
@@ -27,6 +30,9 @@ export default function Home() {
             alt="ShopSentix Logo"
             className="max-w-[100px] max-h-[100px] mb-4 mx-auto mt-12"
           />
+          <p className="lg:w-2/3 mx-auto text-6xl text-neutral-950 mb-6">
+            ShopSentix
+          </p>
           <p className="lg:w-2/3 mx-auto leading-relaxed text-base">
             Discover sentiments on-demand. Enter a product name to unveil
             real-time insights
@@ -39,13 +45,18 @@ export default function Home() {
                 type="text"
                 id="name"
                 name="name"
+                value={searchTerm}
+                onChange={(e) => setSearchTerm(e.target.value)}
                 className="w-full bg-white bg-opacity-40 rounded border border-gray-700 focus:border-blue-400 focus:bg-white focus:ring-2 focus:ring-blue-400 text-base outline-none text-gray-800 py-1 px-3 leading-8 transition-colors duration-200 ease-in-out"
               />
             </div>
-            <RouterLink to="/home/table">
+            <RouterLink
+              to={`/home/table?searchTerm=${encodeURIComponent(searchTerm)}`}
+            >
+              {/* Include search term as a query parameter */}
               <button
                 type="button"
-                className="text-white bg-blue-700 hover:bg-blue-800 font-medium rounded-lg text-sm px-5 py-2.5 me-2 ml-1 mb-2 mt-2 dark:bg-blue-600 dark:hover:bg-blue-700 focus:outline-none "
+                className="text-white bg-blue-700 hover:bg-blue-800 font-medium rounded-lg text-sm px-5 py-2.5 me-2 ml-1 mb-2 mt-2 dark:bg-blue-600 dark:hover:bg-blue-700 focus:outline-none"
               >
                 Search
               </button>
