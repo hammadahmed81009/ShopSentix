@@ -5,6 +5,19 @@ import Logo from '../Resources/logo3.png';
 export default function Navbar() {
   const location = useLocation();
 
+  const handleLogout = () => {
+    console.log(sessionStorage.getItem('userEmail'))
+    console.log(sessionStorage.getItem('userFirstName'))
+    console.log(sessionStorage.getItem('userSurname'))
+    sessionStorage.removeItem('userEmail');
+    sessionStorage.removeItem('userFirstName')
+    sessionStorage.removeItem('userSurname')
+    console.log(sessionStorage.getItem('userEmail'),"ABCD")
+    console.log(sessionStorage.getItem('userFirstName'),"ABCD")
+    console.log(sessionStorage.getItem('userSurname'),"ABCD")
+
+  };
+
   return (
     <header className="text-gray-600 body-font fixed top-0 w-full bg-white z-10 shadow-lg">
       <div className="container mx-auto flex flex-wrap p-5 flex-col md:flex-row items-center">
@@ -25,7 +38,7 @@ export default function Navbar() {
           <Link to="/savedfiles" className={`mr-5 hover:text-gray-900 ${location.pathname === '/savedfiles' ? 'font-bold text-blue-600 mb-1' : ''}`}>
             History
           </Link>
-          <Link to="/" className="py-2 px-3 bg-blue-500 hover:bg-blue-600 text-white rounded transition duration-300">
+          <Link to="/" onClick={handleLogout} className="py-2 px-3 bg-blue-500 hover:bg-blue-600 text-white rounded transition duration-300">
             Logout
           </Link>
         </nav>

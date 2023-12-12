@@ -35,8 +35,11 @@ const LoginComponent = () => {
           password,
         })
         .then((res) => {
+          
           if (res.data === "exist") {
+            sessionStorage.setItem('userEmail', email);
             history("/home", { state: { id: email } });
+            console.log(sessionStorage.getItem('userEmail'))
           } else if (res.data === "notexist") {
             openModal("User Not Found");
           } else if (res.data === "wrongpassword") {

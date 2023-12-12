@@ -1,6 +1,7 @@
 import React from 'react';
 
 export default function SavedFiles() {
+  console.log(sessionStorage.getItem("userEmail"))
 
     const products = [
         {

@@ -35,6 +35,8 @@ const RegisterPage = () => {
       const response = await axios.post("http://localhost:8000/signup", {
         email,
         password,
+        firstName,
+        surname,
       });
 
       if (response.data.includes("notexist")) {
@@ -46,6 +48,11 @@ const RegisterPage = () => {
         );
 
         if (verificationResponse.status === 200) {
+
+          sessionStorage.setItem('userFirstName', firstName);
+          sessionStorage.setItem('userSurname', surname);
+          sessionStorage.setItem('userEmail', email);
+
           setLoading(false);
           history(`/verification/${email}`);
         } else {
