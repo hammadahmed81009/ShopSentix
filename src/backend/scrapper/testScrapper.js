@@ -1,7 +1,7 @@
 // testScrapper.js
 const express = require('express');
 const cors = require('cors');
-const { scrapeDarazProducts } = require('./WebScrapper'); // Import the function
+const { scrapeDarazProducts } = require('./WebScrapper');
 
 const app = express();
 const port = 3001;
