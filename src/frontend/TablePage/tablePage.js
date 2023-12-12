@@ -10,7 +10,7 @@ export default function TablePage() {
   const [visibleProducts, setVisibleProducts] = useState(5);
 
   useEffect(() => {
-    // Retrieve search term from URL when component mounts
+    // Retrieve search term from URL when the component mounts
     const searchParams = new URLSearchParams(location.search);
     const term = searchParams.get("searchTerm");
     console.log("ITEM");
@@ -18,7 +18,7 @@ export default function TablePage() {
     if (term) {
       console.log("INSIDE TERM");
       setSearchTerm(term);
-      handleSearchClick(term); // Trigger the search when search term is available
+      handleSearchClick(term); // Trigger the search when the search term is available
     }
   }, [location.search]);
 
@@ -30,7 +30,7 @@ export default function TablePage() {
   const handleSearchClick = (term) => {
     setLoading(true);
 
-    fetch("http://localhost:3001/search", {
+    fetch("http://localhost:8000/search", {
       method: "POST",
       headers: {
         "Content-Type": "application/json",
@@ -81,7 +81,9 @@ export default function TablePage() {
       </div>
 
       <div className="flex items-center ml-8">
-        <span className="mr-2">Your Results</span>
+        <span className="mr-2">
+          Your Results ({visibleProductsArray.length} of {products.length})
+        </span>
         <div className="flex-1 border-t border-gray-800 mr-8"></div>
       </div>
 
