@@ -1,5 +1,5 @@
-// ProductCard.js
 import React from 'react';
+import { Link as RouterLink } from 'react-router-dom';
 
 const ProductCard = ({ ImageURL, Title, CurrentPrice, stars }) => {
   const renderStars = () => {
@@ -36,9 +36,11 @@ const ProductCard = ({ ImageURL, Title, CurrentPrice, stars }) => {
         </div>
         <div className="flex-shrink-0 flex items-center justify-center p-4">
           {renderStars()}
-          <button className="bg-blue-500 text-white px-4 py-2 rounded-full hover:bg-blue-600">
-            Analyze
-          </button>
+          <RouterLink to="/home/table/dashboard">
+            <button className="bg-blue-500 text-white px-4 py-2 rounded-full hover:bg-blue-600">
+              Analyze
+            </button>
+          </RouterLink>
         </div>
       </div>
     </div>

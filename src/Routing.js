@@ -41,16 +41,6 @@ export default function Routing() {
           }
         />
         <Route
-          path="/home/table/dashboard"
-          element={
-            <>
-              <Navbar />
-              <Dashboard />
-              <Footer />
-            </>
-          }
-        />
-        <Route
           path="/watchlist"
           element={
             <>
@@ -70,6 +60,7 @@ export default function Routing() {
             </>
           }
         />
+        <Route path="/home/table/dashboard" element={<Dashboard />} />
       </Routes>
     </BrowserRouter>
   );
