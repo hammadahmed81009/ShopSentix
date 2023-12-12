@@ -1,29 +1,45 @@
-import React from 'react';
+import React from "react";
 
 const Modal = ({ isOpen, closeModal, messageType }) => {
   const getTitle = () => {
     switch (messageType) {
-      case 'Wrong Password':
-        return 'Wrong Password';
-      case 'User Not Found':
-        return 'User Not Found';
-      case 'Unexpected Error':
-        return 'Unexpected Error Occurred';
+      case "Wrong Password":
+        return "Wrong Password";
+      case "User Not Found":
+        return "User Not Found";
+      case "Unexpected Error":
+        return "Unexpected Error Occurred";
+      case "Please agree to the Terms of Use and Privacy Policy":
+        return "Error";
+      case "Wrong Details":
+        return "Error";
+      case "Password and confirm password do not match":
+        return "Password Match Error";
+      case "Password must be at least 8 characters long":
+        return "Password Length Error";
       default:
-        return 'Modal Title';
+        return "Modal Title";
     }
   };
 
   const getMessage = () => {
     switch (messageType) {
-      case 'Wrong Password':
-        return 'The password you entered is incorrect.';
-      case 'User Not Found':
-        return 'User not found. Please check your credentials.';
-      case 'Unexpected Error':
-        return 'An unexpected error occurred. Please try again later.';
+      case "Wrong Password":
+        return "The password you entered is incorrect.";
+      case "User Not Found":
+        return "User not found. Please check your credentials.";
+      case "Unexpected Error":
+        return "An unexpected error occurred. Please try again later.";
+      case "Please agree to the Terms of Use and Privacy Policy":
+        return "Please agree to the Terms of Use and Privacy Policy";
+      case "Wrong Details":
+        return "Wrong Details";
+      case "Password and confirm password do not match":
+        return "Password and confirm password do not match";
+      case "Password must be at least 8 characters long":
+        return "Password must be at least 8 characters long";
       default:
-        return 'Default message goes here.';
+        return "Default message goes here.";
     }
   };
 
@@ -32,7 +48,7 @@ const Modal = ({ isOpen, closeModal, messageType }) => {
       id="popup-modal"
       tabIndex="-1"
       className={`${
-        isOpen ? 'fixed' : 'hidden'
+        isOpen ? "fixed" : "hidden"
       } overflow-y-auto overflow-x-hidden top-0 right-0 bottom-0 left-0 z-50 flex items-center justify-center`}
     >
       <div className="relative p-4 w-full max-w-md max-h-full">
@@ -75,7 +91,9 @@ const Modal = ({ isOpen, closeModal, messageType }) => {
                 d="M10 11V6m0 8h.01M19 10a9 9 0 1 1-18 0 9 9 0 0 1 18 0Z"
               />
             </svg>
-            <h3 className="mb-5 text-lg font-normal text-white dark:text-white">{getTitle()}</h3>
+            <h3 className="mb-5 text-lg font-normal text-white dark:text-white">
+              {getTitle()}
+            </h3>
             <p className="text-white">{getMessage()}</p>
             <button
               data-modal-hide="popup-modal"

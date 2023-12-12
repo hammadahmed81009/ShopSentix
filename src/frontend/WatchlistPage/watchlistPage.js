@@ -1,4 +1,4 @@
-import React, { useState } from 'react';
+import React, { useState , useEffect } from 'react';
 import WatchListCard from './watchListCard';
 
 export default function Watchlist() {
@@ -6,6 +6,9 @@ export default function Watchlist() {
   const [inputValue, setInputValue] = useState('');
   const [hoveredIndex, setHoveredIndex] = useState(null);
 
+  useEffect(() => {
+    document.title = "WatchList"
+  }, []);
   const handleAddButton = () => {
     if (inputValue.trim() !== '') {
       const updatedNestedCards = [...nestedCards];

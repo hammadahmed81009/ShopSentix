@@ -1,12 +1,15 @@
 import React from "react";
 import { Link as RouterLink } from "react-router-dom";
 import Logo from "../Resources/logo3.png";
-import { useState } from "react";
+import { useState , useEffect } from "react";
 
 const imageContext = require.context('../Resources/products', false, /\.(jpg|jpeg|png)$/);
 const productImages = imageContext.keys().map(imageContext);
 
 export default function Home() {
+  useEffect(() => {
+    document.title = "Home"
+  }, []);
   const [searchTerm, setSearchTerm] = useState("");
 
   return (

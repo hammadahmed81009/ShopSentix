@@ -4,6 +4,7 @@ const bcrypt = require('bcrypt');
 const cors = require('cors');
 const nodemailer = require('nodemailer');
 const app = express();
+const { scrapeDarazProducts } = require('./src/backend/scrapper/WebScrapper');
 
 app.use(express.json());
 app.use(express.urlencoded({ extended: true }));
@@ -119,6 +120,17 @@ app.post('/signup', async (req, res) => {
   }
 });
 
+app.post('/search', async (req, res) => {
+  const searchQuery = req.body.searchTerm;
+  try {
+      const productDetails = await scrapeDarazProducts(searchQuery);
+      res.json({ products: productDetails });
+  } catch (error) {
+      console.error('Error during scraping:', error);
+      res.status(500).send('Error during scraping');
+  }
+});
+
 app.listen(8000, () => {
-  console.log('port connected');
+  console.log('port connected at 8000');
 });

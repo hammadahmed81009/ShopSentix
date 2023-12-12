@@ -1,7 +1,11 @@
 import React from 'react';
+import {useEffect} from 'react'
 
 export default function SavedFiles() {
-
+  useEffect(() => {
+    document.title = "History"
+    
+  }, []);
     const products = [
         {
           name: 'Product A',

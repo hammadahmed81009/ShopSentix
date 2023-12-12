@@ -1,8 +1,11 @@
-import React, { useState } from 'react';
+import React, { useState, useEffect} from 'react';
 import { useParams, useNavigate } from 'react-router-dom';
 import axios from 'axios';
 
 const VerificationPage = () => {
+  useEffect(() => {
+    document.title = "Verfication"
+  }, []);
   const [otp, setOtp] = useState('');
   const [error, setError] = useState('');
   const navigate = useNavigate(); // Hook to navigate to different pages

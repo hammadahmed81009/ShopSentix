@@ -11,11 +11,17 @@ const RegisterPage = () => {
 
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
-  const [firstName, setFirstName] = useState(""); 
+  const [confirmPassword, setConfirmPassword] = useState("");
+  const [firstName, setFirstName] = useState("");
   const [surname, setSurname] = useState("");
   const [loading, setLoading] = useState(false);
   const [modalOpen, setModalOpen] = useState(false);
   const [modalMessageType, setModalMessageType] = useState("");
+  const [agreeTerms, setAgreeTerms] = useState(false);
+
+  const handleCheckboxChange = () => {
+    setAgreeTerms(!agreeTerms);
+  };
 
   const openModal = (messageType) => {
     setModalMessageType(messageType);
@@ -29,12 +35,36 @@ const RegisterPage = () => {
   async function submit(e) {
     e.preventDefault();
 
+    // Check password length
+    if (password.length < 8) {
+      openModal("Password must be at least 8 characters long");
+      return;
+    }
+
+    // Check if email starts with an alphabet
+    if (!/^[a-zA-Z]/.test(email)) {
+      openModal("Email must start with an alphabet");
+      return;
+    }
+
+    if (!agreeTerms) {
+      openModal("Please agree to the Terms of Use and Privacy Policy");
+      return;
+    }
+
+    if (password.trim() !== confirmPassword.trim()) {
+      openModal("Password and confirm password do not match");
+      return;
+    }    
+
     try {
       setLoading(true);
 
       const response = await axios.post("http://localhost:8000/signup", {
         email,
         password,
+        firstName,
+        surname,
       });
 
       if (response.data.includes("notexist")) {
@@ -46,6 +76,10 @@ const RegisterPage = () => {
         );
 
         if (verificationResponse.status === 200) {
+          sessionStorage.setItem("userFirstName", firstName);
+          sessionStorage.setItem("userSurname", surname);
+          sessionStorage.setItem("userEmail", email);
+
           setLoading(false);
           history(`/verification/${email}`);
         } else {
@@ -64,6 +98,7 @@ const RegisterPage = () => {
   }
 
   useEffect(() => {
+    document.title = "SignUp";
     setLoading(false);
   }, []);
 
@@ -103,13 +138,17 @@ const RegisterPage = () => {
                 <input
                   type="text"
                   placeholder="Firstname"
-                  onChange={(e) => { setFirstName(e.target.value) }}
+                  onChange={(e) => {
+                    setFirstName(e.target.value);
+                  }}
                   className="border rounded-md border-gray-400 py-1 px-2"
                 />
                 <input
                   type="text"
                   placeholder="Surname"
-                  onChange={(e) => { setSurname(e.target.value) }}
+                  onChange={(e) => {
+                    setSurname(e.target.value);
+                  }}
                   className="border rounded-md border-gray-400 py-1 px-2"
                 />
               </div>
@@ -137,11 +176,19 @@ const RegisterPage = () => {
                 <input
                   type="password"
                   placeholder="Confirm Password"
+                  onChange={(e) => {
+                    setConfirmPassword(e.target.value);
+                  }}
                   className="border rounded-md border-gray-400 py-1 px-2 w-full"
                 />
               </div>
+
               <div className="mt-5">
-                <input type="checkbox" className="border border-gray-400" />
+                <input
+                  type="checkbox"
+                  onChange={handleCheckboxChange}
+                  className="border border-gray-400"
+                />
                 <span>
                   I accept the{" "}
                   <a href="#" className="text-blue-600 font-semibold">
@@ -154,13 +201,13 @@ const RegisterPage = () => {
                 </span>
               </div>
               <div className="mt-5">
-              {modalOpen && (
-              <Modal
-                isOpen={modalOpen}
-                closeModal={closeModal}
-                messageType={modalMessageType}
-              />
-            )}
+                {modalOpen && (
+                  <Modal
+                    isOpen={modalOpen}
+                    closeModal={closeModal}
+                    messageType={modalMessageType}
+                  />
+                )}
                 {loading ? (
                   <Loader />
                 ) : (

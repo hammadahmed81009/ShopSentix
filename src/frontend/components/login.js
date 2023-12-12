@@ -1,4 +1,4 @@
-import React, { useState } from "react";
+import React, { useState ,useEffect} from "react";
 import axios from "axios";
 import { useNavigate } from "react-router-dom";
 import image from "../Resources/Register-Background.png";
@@ -8,12 +8,16 @@ import Modal from "./Modal"; // Import the Modal component
 
 const LoginComponent = () => {
   const history = useNavigate();
+  useEffect(() => {
+    document.title = "Login"
+  }, []);
 
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
   const [isModalOpen, setModalOpen] = useState(false);
   const [modalMessageType, setModalMessageType] = useState("");
   const [alertContent, setAlertContent] = useState(null);
+
 
   
   const openModal = (messageType) => {
@@ -35,8 +39,11 @@ const LoginComponent = () => {
           password,
         })
         .then((res) => {
+          
           if (res.data === "exist") {
+            sessionStorage.setItem('userEmail', email);
             history("/home", { state: { id: email } });
+            console.log(sessionStorage.getItem('userEmail'))
           } else if (res.data === "notexist") {
             openModal("User Not Found");
           } else if (res.data === "wrongpassword") {
