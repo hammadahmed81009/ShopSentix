@@ -11,11 +11,16 @@ const RegisterPage = () => {
 
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
-  const [firstName, setFirstName] = useState(""); 
+  const [firstName, setFirstName] = useState("");
   const [surname, setSurname] = useState("");
   const [loading, setLoading] = useState(false);
   const [modalOpen, setModalOpen] = useState(false);
   const [modalMessageType, setModalMessageType] = useState("");
+  const [agreeTerms, setAgreeTerms] = useState(false);
+
+  const handleCheckboxChange = () => {
+    setAgreeTerms(!agreeTerms);
+  };
 
   const openModal = (messageType) => {
     setModalMessageType(messageType);
@@ -29,6 +34,10 @@ const RegisterPage = () => {
   async function submit(e) {
     e.preventDefault();
 
+    if (!agreeTerms) {
+      openModal("Please agree to the Terms of Use and Privacy Policy");
+      return;
+    }
     try {
       setLoading(true);
 
@@ -103,13 +112,17 @@ const RegisterPage = () => {
                 <input
                   type="text"
                   placeholder="Firstname"
-                  onChange={(e) => { setFirstName(e.target.value) }}
+                  onChange={(e) => {
+                    setFirstName(e.target.value);
+                  }}
                   className="border rounded-md border-gray-400 py-1 px-2"
                 />
                 <input
                   type="text"
                   placeholder="Surname"
-                  onChange={(e) => { setSurname(e.target.value) }}
+                  onChange={(e) => {
+                    setSurname(e.target.value);
+                  }}
                   className="border rounded-md border-gray-400 py-1 px-2"
                 />
               </div>
@@ -141,7 +154,11 @@ const RegisterPage = () => {
                 />
               </div>
               <div className="mt-5">
-                <input type="checkbox" className="border border-gray-400" />
+                <input
+                  type="checkbox"
+                  onChange={handleCheckboxChange}
+                  className="border border-gray-400"
+                />
                 <span>
                   I accept the{" "}
                   <a href="#" className="text-blue-600 font-semibold">
@@ -154,13 +171,13 @@ const RegisterPage = () => {
                 </span>
               </div>
               <div className="mt-5">
-              {modalOpen && (
-              <Modal
-                isOpen={modalOpen}
-                closeModal={closeModal}
-                messageType={modalMessageType}
-              />
-            )}
+                {modalOpen && (
+                  <Modal
+                    isOpen={modalOpen}
+                    closeModal={closeModal}
+                    messageType={modalMessageType}
+                  />
+                )}
                 {loading ? (
                   <Loader />
                 ) : (
