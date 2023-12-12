@@ -7,8 +7,12 @@ import Section4 from './Section4';
 import Section5 from './Section5';
 import Section6 from './Section6';
 import Footer from './Footer';
+import {useEffect} from 'react'
 
 export default function Hero() {
+  useEffect(() => {
+    document.title = "ShopSentix"
+  }, []);
   return (
     <>
       <Navbar />

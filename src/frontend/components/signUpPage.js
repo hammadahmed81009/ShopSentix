@@ -87,6 +87,7 @@ const RegisterPage = () => {
   }
 
   useEffect(() => {
+    document.title = "SignUp"
     setLoading(false);
   }, []);
 

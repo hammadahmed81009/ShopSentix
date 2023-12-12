@@ -1,8 +1,11 @@
 import React from 'react';
+import {useEffect} from 'react'
 
 export default function SavedFiles() {
-  console.log(sessionStorage.getItem("userEmail"))
-
+  useEffect(() => {
+    document.title = "History"
+    
+  }, []);
     const products = [
         {
           name: 'Product A',
