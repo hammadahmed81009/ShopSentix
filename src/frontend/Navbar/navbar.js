@@ -25,6 +25,9 @@ export default function Navbar() {
           <Link to="/savedfiles" className={`mr-5 hover:text-gray-900 ${location.pathname === '/savedfiles' ? 'font-bold text-blue-600 mb-1' : ''}`}>
             History
           </Link>
+          <Link to="/" className="py-2 px-3 bg-blue-500 hover:bg-blue-600 text-white rounded transition duration-300">
+            Logout
+          </Link>
         </nav>
       </div>
     </header>
