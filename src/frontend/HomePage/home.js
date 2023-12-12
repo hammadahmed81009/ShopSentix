@@ -3,6 +3,9 @@ import { Link as RouterLink } from "react-router-dom";
 import Logo from "../Resources/logo3.png";
 import { useState } from "react";
 
+const imageContext = require.context('../Resources/products', false, /\.(jpg|jpeg|png)$/);
+const productImages = imageContext.keys().map(imageContext);
+
 export default function Home() {
   const [searchTerm, setSearchTerm] = useState("");
 
@@ -74,15 +77,15 @@ export default function Home() {
           <div className="flex flex-wrap -m-4">
             <div className="lg:w-1/4 md:w-1/2 p-4 w-full">
               <a className="block relative h-48 rounded overflow-hidden">
-                <img
-                  alt="ecommerce"
-                  className="object-cover object-center w-full h-full block"
-                  src="https://dummyimage.com/420x260"
-                />
+              <img
+        src={productImages[0]} // Use the image with the name "airpods.jpeg"
+        alt="Airpods" // Provide a meaningful alt text
+        className="w-full h-auto mt-2" // Adjust the classes as needed
+      />
               </a>
               <div className="mt-4">
-                <h3 className="text-gray-500 text-xs tracking-widest title-font mb-1">
-                  CATEGORY
+                <h3 className="text-gray-500 text-xl tracking-widest title-font mb-1">
+                  Airpods
                 </h3>
                 <h2 className="text-white title-font text-lg font-medium">
                   The Catalyzer
@@ -95,12 +98,12 @@ export default function Home() {
                 <img
                   alt="ecommerce"
                   className="object-cover object-center w-full h-full block"
-                  src="https://dummyimage.com/421x261"
+                  src={productImages[1]}
                 />
               </a>
               <div className="mt-4">
-                <h3 className="text-gray-500 text-xs tracking-widest title-font mb-1">
-                  CATEGORY
+                <h3 className="text-gray-500 text-xl tracking-widest title-font mb-1">
+                  Battery
                 </h3>
                 <h2 className="text-white title-font text-lg font-medium">
                   Shooting Stars
@@ -113,12 +116,12 @@ export default function Home() {
                 <img
                   alt="ecommerce"
                   className="object-cover object-center w-full h-full block"
-                  src="https://dummyimage.com/422x262"
+                  src={productImages[2]}
                 />
               </a>
               <div className="mt-4">
-                <h3 className="text-gray-500 text-xs tracking-widest title-font mb-1">
-                  CATEGORY
+                <h3 className="text-gray-500 text-xl tracking-widest title-font mb-1">
+                  Battery
                 </h3>
                 <h2 className="text-white title-font text-lg font-medium">
                   Neptune
@@ -131,12 +134,12 @@ export default function Home() {
                 <img
                   alt="ecommerce"
                   className="object-cover object-center w-full h-full block"
-                  src="https://dummyimage.com/423x263"
+                  src={productImages[3]}
                 />
               </a>
               <div className="mt-4">
-                <h3 className="text-gray-500 text-xs tracking-widest title-font mb-1">
-                  CATEGORY
+                <h3 className="text-gray-500 text-xl tracking-widest title-font mb-1">
+                  Bottle
                 </h3>
                 <h2 className="text-white title-font text-lg font-medium">
                   The 400 Blows
@@ -149,12 +152,12 @@ export default function Home() {
                 <img
                   alt="ecommerce"
                   className="object-cover object-center w-full h-full block"
-                  src="https://dummyimage.com/424x264"
+                  src={productImages[4]}
                 />
               </a>
               <div className="mt-4">
-                <h3 className="text-gray-500 text-xs tracking-widest title-font mb-1">
-                  CATEGORY
+                <h3 className="text-gray-500 text-xl tracking-widest title-font mb-1">
+                  Samsung
                 </h3>
                 <h2 className="text-white title-font text-lg font-medium">
                   The Catalyzer
@@ -167,12 +170,12 @@ export default function Home() {
                 <img
                   alt="ecommerce"
                   className="object-cover object-center w-full h-full block"
-                  src="https://dummyimage.com/425x265"
+                  src={productImages[5]}
                 />
               </a>
               <div className="mt-4">
-                <h3 className="text-gray-500 text-xs tracking-widest title-font mb-1">
-                  CATEGORY
+                <h3 className="text-gray-500 text-xl tracking-widest title-font mb-1">
+                  Q-Mobile
                 </h3>
                 <h2 className="text-white title-font text-lg font-medium">
                   Shooting Stars
@@ -185,12 +188,12 @@ export default function Home() {
                 <img
                   alt="ecommerce"
                   className="object-cover object-center w-full h-full block"
-                  src="https://dummyimage.com/427x267"
+                  src={productImages[6]}
                 />
               </a>
               <div className="mt-4">
-                <h3 className="text-gray-500 text-xs tracking-widest title-font mb-1">
-                  CATEGORY
+                <h3 className="text-gray-500 text-xl tracking-widest title-font mb-1">
+                  Speaker
                 </h3>
                 <h2 className="text-white title-font text-lg font-medium">
                   Neptune
@@ -203,12 +206,12 @@ export default function Home() {
                 <img
                   alt="ecommerce"
                   className="object-cover object-center w-full h-full block"
-                  src="https://dummyimage.com/428x268"
+                  src={productImages[8]}
                 />
               </a>
               <div className="mt-4">
-                <h3 className="text-gray-500 text-xs tracking-widest title-font mb-1">
-                  CATEGORY
+                <h3 className="text-gray-500 text-xl tracking-widest title-font mb-1">
+                  TCL
                 </h3>
                 <h2 className="text-white title-font text-lg font-medium">
                   The 400 Blows
