@@ -15,6 +15,8 @@ const Modal = ({ isOpen, closeModal, messageType }) => {
         return "Error";
       case "Password and confirm password do not match":
         return "Password Match Error";
+      case "Password must be at least 8 characters long":
+        return "Password Length Error";
       default:
         return "Modal Title";
     }
@@ -34,6 +36,8 @@ const Modal = ({ isOpen, closeModal, messageType }) => {
         return "Wrong Details";
       case "Password and confirm password do not match":
         return "Password and confirm password do not match";
+      case "Password must be at least 8 characters long":
+        return "Password must be at least 8 characters long";
       default:
         return "Default message goes here.";
     }

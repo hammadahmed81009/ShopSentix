@@ -35,15 +35,27 @@ const RegisterPage = () => {
   async function submit(e) {
     e.preventDefault();
 
+    // Check password length
+    if (password.length < 8) {
+      openModal("Password must be at least 8 characters long");
+      return;
+    }
+
+    // Check if email starts with an alphabet
+    if (!/^[a-zA-Z]/.test(email)) {
+      openModal("Email must start with an alphabet");
+      return;
+    }
+
     if (!agreeTerms) {
       openModal("Please agree to the Terms of Use and Privacy Policy");
       return;
     }
 
-    if (password !== confirmPassword) {
+    if (password.trim() !== confirmPassword.trim()) {
       openModal("Password and confirm password do not match");
       return;
-    }
+    }    
 
     try {
       setLoading(true);
@@ -64,10 +76,9 @@ const RegisterPage = () => {
         );
 
         if (verificationResponse.status === 200) {
-
-          sessionStorage.setItem('userFirstName', firstName);
-          sessionStorage.setItem('userSurname', surname);
-          sessionStorage.setItem('userEmail', email);
+          sessionStorage.setItem("userFirstName", firstName);
+          sessionStorage.setItem("userSurname", surname);
+          sessionStorage.setItem("userEmail", email);
 
           setLoading(false);
           history(`/verification/${email}`);
@@ -87,7 +98,7 @@ const RegisterPage = () => {
   }
 
   useEffect(() => {
-    document.title = "SignUp"
+    document.title = "SignUp";
     setLoading(false);
   }, []);
 
@@ -165,9 +176,13 @@ const RegisterPage = () => {
                 <input
                   type="password"
                   placeholder="Confirm Password"
+                  onChange={(e) => {
+                    setConfirmPassword(e.target.value);
+                  }}
                   className="border rounded-md border-gray-400 py-1 px-2 w-full"
                 />
               </div>
+
               <div className="mt-5">
                 <input
                   type="checkbox"
