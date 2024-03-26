@@ -1,39 +1,35 @@
-import React, { useState, useEffect } from "react";
-import ProductCard from "./ProductCard";
-import { useLocation } from "react-router-dom";
+import React, { useState, useEffect } from 'react';
+import ProductCard from './ProductCard';
+import { useLocation } from 'react-router-dom';
 
 export default function TablePage() {
   const location = useLocation();
-  const [searchTerm, setSearchTerm] = useState("");
+  const [searchTerm, setSearchTerm] = useState('');
   const [products, setProducts] = useState([]);
   const [loading, setLoading] = useState(false);
   const [visibleProducts, setVisibleProducts] = useState(5);
 
   useEffect(() => {
-    // Retrieve search term from URL when the component mounts
     const searchParams = new URLSearchParams(location.search);
-    const term = searchParams.get("searchTerm");
-    console.log("ITEM");
-    console.log(term);
+    const term = searchParams.get('searchTerm');
+
     if (term) {
-      console.log("INSIDE TERM");
       setSearchTerm(term);
-      handleSearchClick(term); // Trigger the search when the search term is available
+      handleSearchClick(term);
     }
   }, [location.search]);
 
   const handleLoadMore = () => {
-    // Increase the number of visible products by 5
     setVisibleProducts((prevVisibleProducts) => prevVisibleProducts + 5);
   };
 
   const handleSearchClick = (term) => {
     setLoading(true);
 
-    fetch("http://localhost:8000/search", {
-      method: "POST",
+    fetch('http://localhost:8000/search', {
+      method: 'POST',
       headers: {
-        "Content-Type": "application/json",
+        'Content-Type': 'application/json',
       },
       body: JSON.stringify({ searchTerm: term }),
     })
@@ -43,16 +39,14 @@ export default function TablePage() {
         setLoading(false);
       })
       .catch((error) => {
-        console.error("Error:", error);
+        console.error('Error:', error);
         setLoading(false);
       });
   };
 
-  useEffect(() => {
-    // You can include additional logic for initial data fetching here if needed
-  }, []); // Empty dependency array means this effect runs once when the component mounts
-
-  const visibleProductsArray = products.slice(0, visibleProducts);
+  const visibleProductsArray = Array.isArray(products)
+    ? products.slice(0, visibleProducts)
+    : [];
 
   return (
     <section className="text-gray-400 bg-white body-font min-h-screen relative">

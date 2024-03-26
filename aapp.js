@@ -4,7 +4,9 @@ const bcrypt = require('bcrypt');
 const cors = require('cors');
 const nodemailer = require('nodemailer');
 const app = express();
-const { scrapeDarazProducts } = require('./src/backend/scrapper/WebScrapper');
+const {
+  scrapeDarazProducts,
+} = require('./src/backend/scrapper/newScrapper/Scrapper');
 
 app.use(express.json());
 app.use(express.urlencoded({ extended: true }));
@@ -48,7 +50,9 @@ app.post('/send-verification-email', (req, res) => {
     userOtpMap[email] = otp;
 
     // Respond with the user's email and a success message
-    res.status(200).json({ email, message: 'Verification email sent successfully' });
+    res
+      .status(200)
+      .json({ email, message: 'Verification email sent successfully' });
   });
 });
 
@@ -56,14 +60,13 @@ app.post('/verify-otp-and-register', (req, res) => {
   const { email, password, otp } = req.body;
 
   if (userOtpMap[email] && userOtpMap[email].toString() === otp.toString()) {
-    console.log("Login")
+    console.log('Login');
 
     res.status(200).send('User registered successfully');
   } else {
     res.status(401).send('Invalid OTP');
   }
 });
-
 
 app.post('/login', async (req, res) => {
   const { email, password } = req.body;
@@ -82,7 +85,7 @@ app.post('/login', async (req, res) => {
       }
     } else {
       res.json('notexist');
-      console.log("User Logged In");
+      console.log('User Logged In');
     }
   } catch (e) {
     console.error(e);
@@ -112,7 +115,7 @@ app.post('/signup', async (req, res) => {
       });
 
       res.json('notexist');
-      console.log("User Registered");
+      console.log('User Registered');
     }
   } catch (e) {
     console.error(e);
@@ -123,11 +126,12 @@ app.post('/signup', async (req, res) => {
 app.post('/search', async (req, res) => {
   const searchQuery = req.body.searchTerm;
   try {
-      const productDetails = await scrapeDarazProducts(searchQuery);
-      res.json({ products: productDetails });
+    const productDetails = await scrapeDarazProducts(searchQuery);
+    // console.log(productDetails);
+    res.json({ products: productDetails });
   } catch (error) {
-      console.error('Error during scraping:', error);
-      res.status(500).send('Error during scraping');
+    console.error('Error during scraping:', error);
+    res.status(500).send('Error during scraping');
   }
 });
 

@@ -4,7 +4,7 @@ import Hero from './frontend/Hero/HeroComponent';
 import SignUp from './frontend/components/signUpPage';
 import Login from './frontend/components/login';
 import Navbar from './frontend/Navbar/navbar';
-import Footer from './frontend/Hero/Footer'
+import Footer from './frontend/Hero/Footer';
 import Home from './frontend/HomePage/home';
 import Watchlist from './frontend/WatchlistPage/watchlistPage';
 import SavedFiles from './frontend/components/savedFiles';

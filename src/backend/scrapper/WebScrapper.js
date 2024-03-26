@@ -12,7 +12,7 @@ async function scrapeDarazProducts(searchQuery) {
   await page.goto(searchUrl);
 
   // Wait for the page to load by checking for a specific selector
-  await page.waitForSelector('.gridItem--Yd0sa', { timeout: 10000 });
+  await page.waitForSelector('.gridItem--Yd0sa', { timeout: 100000 });
 
   // Scroll down to trigger loading more products (if any)
   await page.evaluate(() => {
@@ -20,7 +20,7 @@ async function scrapeDarazProducts(searchQuery) {
   });
 
   // Allow time for the additional content to load
-  await page.waitForTimeout(10000);
+  await page.waitForTimeout(100000);
 
   // Wait for all images to be loaded
   await page.waitForFunction(() => {
@@ -34,16 +34,29 @@ async function scrapeDarazProducts(searchQuery) {
 
     return products.map((product) => {
       const titleElement = product.querySelector('.title--wFj93 a');
-      const productTitle = titleElement.textContent;
-      const productUrl = 'https:' + titleElement.getAttribute('href');
+      const productTitle = titleElement
+        ? titleElement.textContent
+        : 'No title available';
+      const productUrl = titleElement
+        ? 'https:' + titleElement.getAttribute('href')
+        : 'No url available';
 
       const imageElement = product.querySelector('.mainPic--ehOdr img');
-      const imageUrl = imageElement?.getAttribute('src') || imageElement?.getAttribute('data-src') || 'No image available';
+      const imageUrl =
+        imageElement?.getAttribute('src') ||
+        imageElement?.getAttribute('data-src') ||
+        'No image available';
 
-      const currentPriceElement = product.querySelector('.price--NVB62 .currency--GVKjl');
-      const currentPrice = currentPriceElement ? currentPriceElement.textContent.trim() : 'N/A';
+      const currentPriceElement = product.querySelector(
+        '.price--NVB62 .currency--GVKjl'
+      );
+      const currentPrice = currentPriceElement
+        ? currentPriceElement.textContent.trim()
+        : 'N/A';
 
-      const starRatingElements = product.querySelectorAll('.rating--ZI3Ol .star-icon--k88DV');
+      const starRatingElements = product.querySelectorAll(
+        '.rating--ZI3Ol .star-icon--k88DV'
+      );
       const starRating = starRatingElements.length;
 
       return {
