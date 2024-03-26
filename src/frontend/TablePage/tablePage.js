@@ -23,25 +23,32 @@ export default function TablePage() {
     setVisibleProducts((prevVisibleProducts) => prevVisibleProducts + 5);
   };
 
-  const handleSearchClick = (term) => {
+  const handleSearchClick = async (term) => {
     setLoading(true);
-
-    fetch('http://localhost:8000/search', {
-      method: 'POST',
-      headers: {
-        'Content-Type': 'application/json',
-      },
-      body: JSON.stringify({ searchTerm: term }),
-    })
-      .then((response) => response.json())
-      .then((data) => {
-        setProducts(data.products || []);
-        setLoading(false);
-      })
-      .catch((error) => {
-        console.error('Error:', error);
-        setLoading(false);
+  
+    try {
+      const response = await fetch('http://localhost:8000/search', {
+        method: 'POST',
+        headers: {
+          'Content-Type': 'application/json',
+        },
+        body: JSON.stringify({ searchTerm: term }),
       });
+
+      if (!response.ok) {
+        throw new Error(`HTTP error! Status: ${response.status}`);
+      }
+
+      const data = await response.json(); // Parse the JSON data from the response
+      
+      //console.log(data);
+      setProducts(data.products || []);
+
+    } catch (error) {
+      console.error('Error:', error);
+    } finally {
+      setLoading(false);
+    }
   };
 
   const visibleProductsArray = Array.isArray(products)

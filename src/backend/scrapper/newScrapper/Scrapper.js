@@ -9,6 +9,10 @@ const client = new Client({
   useBackoffSleep: false,
 });
 
+function delay(duration) {
+  return new Promise(resolve => setTimeout(resolve, duration));
+}
+
 // Function to check if sitemap exists and update if necessary
 async function checkSitemapExists(sitemapData) {
   const filePath = path.join(__dirname, 'toCompareSitemap.js');
@@ -147,7 +151,9 @@ async function createOrUpdateSitemapAndRunScrapingJob(productName) {
   const sitemapResponse = await createSitemapIfNotExists(sitemap);
   await createAndRunScrapingJob(sitemapResponse);
 
-  const getGCPvalues = gcp();
+  await delay(120000);
+
+  const getGCPvalues = await gcp();
   return getGCPvalues;
 }
 

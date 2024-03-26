@@ -70,13 +70,13 @@ async function fetchDataFromGoogleSheets() {
     auth: client,
   });
 
-  const spreadsheetID = '1TvMTE_pCezyj-_urtC99IjQPVp05bhmPjZDQYXEdvuI';
+  const spreadsheetID = '1pWH1cKzglCfhqbdJQ8uhcDYkNoACVgD3AA6J3XsY210';
 
   // Read rows from spreadsheet
   const getRows = await googleSheets.spreadsheets.values.get({
     auth: auth,
     spreadsheetId: spreadsheetID,
-    range: 'daraz_api!C:F',
+    range: 'daraz_api_call!C:F',
   });
 
   // Check if values exist and then remove the 0th index (header row)
@@ -93,6 +93,8 @@ async function fetchDataFromGoogleSheets() {
       stars: row[2],
     })),
   };
+
+  console.log(modifiedData);
 
   return modifiedData;
 }

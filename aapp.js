@@ -126,8 +126,22 @@ app.post('/signup', async (req, res) => {
 app.post('/search', async (req, res) => {
   const searchQuery = req.body.searchTerm;
   try {
-    const productDetails = await scrapeDarazProducts(searchQuery);
-    // console.log(productDetails);
+    console.log(searchQuery);
+    // Assuming scrapeDarazProducts returns an object with a 'values' array
+    const rawData = await scrapeDarazProducts(searchQuery);
+    //console.log(rawData);
+    //console.log(JSON.stringify(rawData));
+
+    // Map over the 'values' array to construct the response data
+    const productDetails = rawData.values.map(product => ({
+      Title: product.Title,
+      URL: product.URL, // Assuming you meant to send an actual URL string here
+      ImageURL: product.ImageURL,
+      CurrentPrice: product.CurrentPrice,
+      Stars: product.stars
+    }));
+
+    // Send the structured data as response
     res.json({ products: productDetails });
   } catch (error) {
     console.error('Error during scraping:', error);
