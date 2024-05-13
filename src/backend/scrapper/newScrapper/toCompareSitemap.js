@@ -5,52 +5,62 @@ module.exports = {
   ],
   "selectors": [
     {
-      "id": "title",
-      "multiple": false,
-      "parentSelectors": [
-        "cardFinal"
-      ],
-      "regex": "",
-      "selector": "div.title-wrapper--IaQ0m",
-      "type": "SelectorText"
-    },
-    {
-      "id": "price",
-      "multiple": false,
-      "parentSelectors": [
-        "cardFinal"
-      ],
-      "regex": "",
-      "selector": "span.currency--GVKjl",
-      "type": "SelectorText"
-    },
-    {
-      "id": "cardFinal",
-      "multiple": true,
+      "id": "card2",
       "parentSelectors": [
         "_root"
       ],
+      "type": "SelectorElement",
       "selector": "div.gridItem--Yd0sa",
-      "type": "SelectorElement"
+      "multiple": true
     },
     {
-      "id": "reviews",
-      "multiple": true,
+      "id": "title",
       "parentSelectors": [
-        "cardFinal"
+        "card2"
       ],
-      "regex": "",
-      "selector": "span.ratig-num--KNake",
-      "type": "SelectorText"
+      "type": "SelectorText",
+      "selector": "div.title-wrapper--IaQ0m",
+      "multiple": true,
+      "regex": ""
+    },
+    {
+      "id": "price",
+      "parentSelectors": [
+        "card2"
+      ],
+      "type": "SelectorText",
+      "selector": "span.currency--GVKjl",
+      "multiple": false,
+      "regex": ""
     },
     {
       "id": "image",
-      "multiple": false,
       "parentSelectors": [
-        "cardFinal"
+        "card2"
       ],
+      "type": "SelectorImage",
       "selector": "img",
-      "type": "SelectorImage"
+      "multiple": true
+    },
+    {
+      "id": "rating",
+      "parentSelectors": [
+        "card2"
+      ],
+      "type": "SelectorText",
+      "selector": "span.ratig-num--KNake",
+      "multiple": true,
+      "regex": ""
+    },
+    {
+      "id": "id-a-link",
+      "parentSelectors": [
+        "card2"
+      ],
+      "type": "SelectorLink",
+      "selector": "a",
+      "multiple": true,
+      "linkType": "linkFromHref"
     }
   ]
 };

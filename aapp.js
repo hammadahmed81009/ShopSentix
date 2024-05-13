@@ -3,6 +3,7 @@ const collection = require('./mongo');
 const bcrypt = require('bcrypt');
 const cors = require('cors');
 const nodemailer = require('nodemailer');
+const reviewScrapper = require('./src/backend/scrapper/newScrapper/ReviewScrapper');
 const app = express();
 const {
   scrapeDarazProducts,
@@ -147,6 +148,23 @@ app.post('/search', async (req, res) => {
     console.error('Error during scraping:', error);
     res.status(500).send('Error during scraping');
   }
+});
+ // Adjust path as needed
+
+app.post('/scrape-reviews', async (req, res) => {
+  const { productUrl } = req.body;
+  try {
+    console.log("Scrapping Started");
+    await reviewScrapper.scrapeDarazReviews(productUrl); // Pass productUrl to scraper
+    res.status(200).send({ message: 'Scraping Finished' });
+  } catch (error) {
+    res.status(500).send({ error: 'Failed to start scraping' });
+  }
+});
+
+const PORT = process.env.PORT || 8000;
+app.listen(PORT, () => {
+  console.log(`Server is running on port ${PORT}`);
 });
 
 app.listen(8000, () => {

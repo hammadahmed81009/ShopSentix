@@ -116,7 +116,7 @@ export default function TablePage() {
         ) : visibleProductsArray.length > 0 ? (
           visibleProductsArray.map((product, index) => (
             <div className="mb-8" key={index}>
-              <ProductCard {...product} />
+              <ProductCard {...product} URL={product.URL} />
             </div>
           ))
         ) : (

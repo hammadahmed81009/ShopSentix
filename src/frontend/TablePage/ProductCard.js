@@ -1,7 +1,7 @@
 import React from 'react';
 import { Link as RouterLink } from 'react-router-dom';
 
-const ProductCard = ({ ImageURL, Title, CurrentPrice, stars }) => {
+const ProductCard = ({ ImageURL, Title, CurrentPrice, stars, URL  }) => {
   const renderStars = () => {
     const starArray = Array.from({ length: stars }, (_, index) => index + 1);
 
@@ -18,6 +18,26 @@ const ProductCard = ({ ImageURL, Title, CurrentPrice, stars }) => {
       </svg>
     ));
   };
+    const handleAnalyzeClick = async () => {
+      try {
+        const response = await fetch('http://localhost:8000/scrape-reviews', {
+          method: 'POST',
+          headers: {
+            'Content-Type': 'application/json',
+          },
+          body: JSON.stringify({ productUrl: URL }),
+        });
+  
+        if (!response.ok) {
+          throw new Error(`HTTP error! Status: ${response.status}`);
+        }
+  
+        const data = await response.json();
+        console.log('Scraping started:', data);
+      } catch (error) {
+        console.error('Error:', error);
+      }
+    };
 
   return (
     <div className="transition-transform duration-300 ease-in-out transform hover:scale-105">
@@ -36,8 +56,8 @@ const ProductCard = ({ ImageURL, Title, CurrentPrice, stars }) => {
         </div>
         <div className="flex-shrink-0 flex items-center justify-center p-4">
           {renderStars()}
-          <RouterLink to="/home/table/dashboard">
-            <button className="bg-blue-500 text-white px-4 py-2 rounded-full hover:bg-blue-600">
+          <RouterLink>
+            <button onClick={handleAnalyzeClick} className="bg-blue-500 text-white px-4 py-2 rounded-full hover:bg-blue-600">
               Analyze
             </button>
           </RouterLink>

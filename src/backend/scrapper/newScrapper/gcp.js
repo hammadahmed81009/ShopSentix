@@ -76,23 +76,31 @@ async function fetchDataFromGoogleSheets() {
   const getRows = await googleSheets.spreadsheets.values.get({
     auth: auth,
     spreadsheetId: spreadsheetID,
-    range: 'daraz_api_call!C:F',
+    range: 'daraz_api_call!A:G', // Adjust the range to include all columns
   });
 
   // Check if values exist and then remove the 0th index (header row)
-  const dataWithoutHeader = getRows.data.values
-    ? getRows.data.values.slice(1)
-    : [];
+  const dataWithoutHeader = getRows.data.values ? getRows.data.values.slice(1) : [];
 
-  const modifiedData = {
-    values: dataWithoutHeader.map((row) => ({
-      Title: row[0],
-      URL: {},
-      ImageURL: row[3],
-      CurrentPrice: row[1],
-      stars: row[2],
-    })),
-  };
+  const products = [];
+
+  for (let i = 0; i < dataWithoutHeader.length; i += 4) {
+    const title = dataWithoutHeader[i][2];
+    const price = dataWithoutHeader[i + 1][3];
+    const imageURL = dataWithoutHeader[i + 1][4];
+    const stars = dataWithoutHeader[i + 2][5];
+    const url = dataWithoutHeader[i + 3][6];
+
+    products.push({
+      Title: title,
+      CurrentPrice: price,
+      ImageURL: imageURL,
+      stars: stars,
+      URL: url,
+    });
+  }
+
+  const modifiedData = { values: products };
 
   console.log(modifiedData);
 
