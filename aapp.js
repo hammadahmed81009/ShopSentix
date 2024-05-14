@@ -149,7 +149,6 @@ app.post('/search', async (req, res) => {
     res.status(500).send('Error during scraping');
   }
 });
- // Adjust path as needed
 
 app.post('/scrape-reviews', async (req, res) => {
   const { productUrl } = req.body;
@@ -163,9 +162,6 @@ app.post('/scrape-reviews', async (req, res) => {
 });
 
 const PORT = process.env.PORT || 8000;
-app.listen(PORT, () => {
-  console.log(`Server is running on port ${PORT}`);
-});
 
 app.listen(8000, () => {
   console.log('port connected at 8000');

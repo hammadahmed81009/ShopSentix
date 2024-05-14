@@ -166,6 +166,3 @@ async function createOrUpdateSitemapAndRunScrapingJob(productName) {
 }
 
 module.exports.scrapeDarazProducts = createOrUpdateSitemapAndRunScrapingJob;
-// createOrUpdateSitemapAndRunScrapingJob("laptop").catch((error) => {
-//   console.error("An error occurred:", error);
-// });

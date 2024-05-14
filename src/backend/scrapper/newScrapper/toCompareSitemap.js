@@ -1,7 +1,7 @@
 module.exports = {
   "_id": "daraz_api_call",
   "startUrl": [
-    "https://www.daraz.pk/catalog/?q=samsung"
+    "https://www.daraz.pk/catalog/?q=infin"
   ],
   "selectors": [
     {

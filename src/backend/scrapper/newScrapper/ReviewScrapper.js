@@ -3,6 +3,7 @@ const api = require("@webscraperio/api-client-nodejs");
 const Client = api.Client;
 const path = require("path");
 const fs = require("fs");
+const gcpReview = require("./gcpReviews");
 
 const client = new Client({
   token: "VA78W0fpZL3yIzsfsB1ApqvMUfga0YuaKbhkGZkL8rLbdRlQfrFxjVZmoNj1",
@@ -114,6 +115,11 @@ async function scrapeDarazReviews(productUrl) {
 
   const sitemapResponse = await createReviewSitemapIfNotExists(reviewSitemap);
   await createAndRunReviewScrapingJob(sitemapResponse);
+
+  await delay(120000);
+
+  const getReviewsFromGCP = await gcpReview();
+  return getReviewsFromGCP;
 }
 
 module.exports.scrapeDarazReviews = scrapeDarazReviews;

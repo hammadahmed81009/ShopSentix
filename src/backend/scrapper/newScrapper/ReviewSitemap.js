@@ -1,16 +1,18 @@
 module.exports = {
-  _id: "reviewSitemap",
-  startUrl: [
-    "https://www.daraz.pk/products/spider-bottle-gym-shakerwater-bottles-for-gym-protein-multi-purpose-shaker-bottle-500ml-i3529873-s2159041921.html",
+  "_id": "reviewSitemap",
+  "startUrl": [
+    "https://www.daraz.pk/products/40i-8gb-8gb-1-000mah-50mp-i456582007-s2161880016.html?search=1"
   ],
-  selectors: [
+  "selectors": [
     {
-      id: "review",
-      multiple: true,
-      parentSelectors: ["_root"],
-      regex: "",
-      selector: "div.review-content-sl",
-      type: "SelectorText",
-    },
-  ],
+      "id": "review",
+      "parentSelectors": [
+        "_root"
+      ],
+      "type": "SelectorText",
+      "selector": "div.review-content-sl",
+      "multiple": true,
+      "regex": ""
+    }
+  ]
 };
