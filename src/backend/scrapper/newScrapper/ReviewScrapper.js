@@ -90,9 +90,7 @@ async function createAndRunReviewScrapingJob(sitemapId) {
   console.log("Review scraping job created:", scrapingJob);
   console.log(scrapingJob);
 
-  const outputFile = path.join(__dirname, `${sitemapId}_review_scrapingjob.json`);
-  await client.downloadScrapingJobJSON(scrapingJob.id, outputFile);
-  console.log("Review data scraped and saved to:", outputFile);
+  return scrapingJob.id;
 }
 
 function combineReviewData() {
@@ -125,9 +123,13 @@ async function scrapeDarazReviews(productUrl) {
   };
 
   const sitemapResponse = await createReviewSitemapIfNotExists(reviewSitemap);
-  await createAndRunReviewScrapingJob(sitemapResponse);
+  const scrapingJobIDFromScrapper = await createAndRunReviewScrapingJob(sitemapResponse);
 
-  await delay(120000);
+  await delay(40000);
+
+  const outputFile = path.join(__dirname, `reviews_scrapingjob.json`);
+  await client.downloadScrapingJobJSON(scrapingJobIDFromScrapper, outputFile);
+  console.log("Review data scraped and saved to:", outputFile);
 
   const combinedReviews = combineReviewData();
   console.log(combinedReviews);
