@@ -1,9 +1,7 @@
-// ReviewScrapper.js
 const api = require("@webscraperio/api-client-nodejs");
 const Client = api.Client;
 const path = require("path");
 const fs = require("fs");
-const gcpReview = require("./gcpReviews");
 
 const client = new Client({
   token: "VA78W0fpZL3yIzsfsB1ApqvMUfga0YuaKbhkGZkL8rLbdRlQfrFxjVZmoNj1",
@@ -97,6 +95,19 @@ async function createAndRunReviewScrapingJob(sitemapId) {
   console.log("Review data scraped and saved to:", outputFile);
 }
 
+function combineReviewData() {
+  const filePath = path.join(__dirname, 'review_scrapingjob.json');
+  const rawData = fs.readFileSync(filePath);
+  const dataLines = rawData.toString().split('\n').filter(line => line.trim() !== '');
+
+  const reviews = dataLines.map(line => {
+    const reviewRow = JSON.parse(line);
+    return reviewRow.review;
+  });
+
+  return { reviews };
+}
+
 async function scrapeDarazReviews(productUrl) {
   const reviewSitemap = {
     _id: "reviewSitemap",
@@ -118,8 +129,9 @@ async function scrapeDarazReviews(productUrl) {
 
   await delay(120000);
 
-  const getReviewsFromGCP = await gcpReview();
-  return getReviewsFromGCP;
+  const combinedReviews = combineReviewData();
+  console.log(combinedReviews);
+  return combinedReviews;
 }
 
 module.exports.scrapeDarazReviews = scrapeDarazReviews;
