@@ -1,7 +1,7 @@
 module.exports = {
   "_id": "reviewSitemap",
   "startUrl": [
-    "https://www.daraz.pk/products/samsung-galaxy-a04-65-inch-display-3gb-ram-32gb-rom-i396504249-s1921861685.html?search=1"
+    "https://www.daraz.pk/products/samsung-a05s-6gb128gb-67-display-android-13-5000-mah-battery-i466959016-s2204021425.html?search=1"
   ],
   "selectors": [
     {

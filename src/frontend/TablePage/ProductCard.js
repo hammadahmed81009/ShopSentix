@@ -1,7 +1,9 @@
-import React from 'react';
+import React, { useState } from 'react';
 import { Link as RouterLink } from 'react-router-dom';
 
-const ProductCard = ({ ImageURL, Title, CurrentPrice, stars, URL  }) => {
+const ProductCard = ({ ImageURL, Title, CurrentPrice, stars, URL }) => {
+  const [loading, setLoading] = useState(false);
+
   const renderStars = () => {
     const starArray = Array.from({ length: stars }, (_, index) => index + 1);
 
@@ -18,26 +20,48 @@ const ProductCard = ({ ImageURL, Title, CurrentPrice, stars, URL  }) => {
       </svg>
     ));
   };
-    const handleAnalyzeClick = async () => {
-      try {
-        const response = await fetch('http://localhost:8000/scrape-reviews', {
+
+  const handleAnalyzeClick = async () => {
+    try {
+      setLoading(true);
+      const response = await fetch('http://localhost:8000/scrape-reviews', {
+        method: 'POST',
+        headers: {
+          'Content-Type': 'application/json',
+        },
+        body: JSON.stringify({ productUrl: URL }),
+      });
+
+      if (!response.ok) {
+        throw new Error(`HTTP error! Status: ${response.status}`);
+      }
+
+      const data = await response.json();
+      console.log('DATA IN HANDLE ANALYSE CLICK: ' + data.reviews.reviews);
+
+      const analyzeResponse = await fetch(
+        'http://localhost:8000/analyze-reviews',
+        {
           method: 'POST',
           headers: {
             'Content-Type': 'application/json',
           },
-          body: JSON.stringify({ productUrl: URL }),
-        });
-  
-        if (!response.ok) {
-          throw new Error(`HTTP error! Status: ${response.status}`);
+          body: JSON.stringify({ reviews: data.reviews.reviews }),
         }
-  
-        const data = await response.json();
-        console.log('Scraping started:', data);
-      } catch (error) {
-        console.error('Error:', error);
+      );
+
+      if (!analyzeResponse.ok) {
+        throw new Error(`HTTP error! Status: ${analyzeResponse.status}`);
       }
-    };
+
+      const analyzeData = await analyzeResponse.json();
+      console.log('Analysis results:', analyzeData);
+    } catch (error) {
+      console.error('Error:', error);
+    } finally {
+      setLoading(false);
+    }
+  };
 
   return (
     <div className="transition-transform duration-300 ease-in-out transform hover:scale-105">
@@ -57,8 +81,14 @@ const ProductCard = ({ ImageURL, Title, CurrentPrice, stars, URL  }) => {
         <div className="flex-shrink-0 flex items-center justify-center p-4">
           {renderStars()}
           <RouterLink>
-            <button onClick={handleAnalyzeClick} className="bg-blue-500 text-white px-4 py-2 rounded-full hover:bg-blue-600">
-              Analyze
+            <button
+              onClick={handleAnalyzeClick}
+              className={`bg-blue-500 text-white px-4 py-2 rounded-full hover:bg-blue-600 ${
+                loading ? 'cursor-not-allowed opacity-50' : ''
+              }`}
+              disabled={loading}
+            >
+              {loading ? 'Analyzing...' : 'Analyze'}
             </button>
           </RouterLink>
         </div>

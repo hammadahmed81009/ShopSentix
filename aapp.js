@@ -8,6 +8,7 @@ const app = express();
 const {
   scrapeDarazProducts,
 } = require('./src/backend/scrapper/newScrapper/Scrapper');
+const { exec } = require('child_process');
 
 app.use(express.json());
 app.use(express.urlencoded({ extended: true }));
@@ -131,12 +132,12 @@ app.post('/search', async (req, res) => {
     const rawData = await scrapeDarazProducts(searchQuery);
     console.log('Raw Data:', rawData); // Log to verify the structure
 
-    const productDetails = rawData.values.map(product => ({
+    const productDetails = rawData.values.map((product) => ({
       Title: product.Title,
       URL: product.URL,
       ImageURL: product.ImageURL,
       CurrentPrice: product.CurrentPrice,
-      Stars: product.stars
+      Stars: product.stars,
     }));
 
     res.json({ products: productDetails });
@@ -149,11 +150,43 @@ app.post('/search', async (req, res) => {
 app.post('/scrape-reviews', async (req, res) => {
   const { productUrl } = req.body;
   try {
-    console.log("Scrapping Started");
-    await reviewScrapper.scrapeDarazReviews(productUrl); // Pass productUrl to scraper
-    res.status(200).send({ message: 'Scraping Finished' });
+    console.log('Scrapping Started');
+    const reviews = await reviewScrapper.scrapeDarazReviews(productUrl); // Pass productUrl to scraper
+    console.log('Scraping Finished');
+
+    // Store the scraped reviews in a variable
+    app.locals.reviews = reviews;
+
+    res.status(200).send({ reviews });
   } catch (error) {
     res.status(500).send({ error: 'Failed to start scraping' });
+  }
+});
+
+const fetch = require('node-fetch');
+
+app.post('/analyze-reviews', async (req, res) => {
+  console.log('ENTERED Analayze Reviews API');
+  const { reviews } = req.body;
+  try {
+    // Process each review
+    for (const review of reviews) {
+      const response = await fetch('http://127.0.0.1:5000/predict', {
+        method: 'POST',
+        headers: {
+          'Content-Type': 'application/json',
+        },
+        body: JSON.stringify({ review }),
+      });
+
+      const data = await response.json();
+      console.log('Prediction:', data);
+    }
+
+    res.status(200).send('Reviews analyzed');
+  } catch (error) {
+    console.error('Error analyzing reviews:', error);
+    res.status(500).send('Error analyzing reviews');
   }
 });
 

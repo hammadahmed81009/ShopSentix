@@ -1,10 +1,10 @@
-const api = require("@webscraperio/api-client-nodejs");
+const api = require('@webscraperio/api-client-nodejs');
 const Client = api.Client;
-const path = require("path");
-const fs = require("fs");
+const path = require('path');
+const fs = require('fs');
 
 const client = new Client({
-  token: "VA78W0fpZL3yIzsfsB1ApqvMUfga0YuaKbhkGZkL8rLbdRlQfrFxjVZmoNj1",
+  token: 'VA78W0fpZL3yIzsfsB1ApqvMUfga0YuaKbhkGZkL8rLbdRlQfrFxjVZmoNj1',
   useBackoffSleep: false,
 });
 
@@ -13,7 +13,7 @@ function delay(duration) {
 }
 
 async function checkReviewSitemapExists(sitemapData) {
-  const filePath = path.join(__dirname, "ReviewSitemap.js");
+  const filePath = path.join(__dirname, 'ReviewSitemap.js');
 
   try {
     const existingSitemap = require(filePath);
@@ -42,63 +42,69 @@ async function checkReviewSitemapExists(sitemapData) {
 async function createReviewSitemapIfNotExists(sitemapData) {
   const exists = await checkReviewSitemapExists(sitemapData);
   if (!exists) {
-    console.log("Review Sitemap does not exist. Creating new sitemap.");
+    console.log('Review Sitemap does not exist. Creating new sitemap.');
 
-    const sitemapID = require("./ReviewId").sitemapID;
+    const sitemapID = require('./ReviewId').sitemapID;
     if (sitemapID) {
-      console.log("Review Sitemap FETCHED.", sitemapID);
+      console.log('Review Sitemap FETCHED.', sitemapID);
       const response = await client.updateSitemap(
         sitemapID,
         JSON.stringify(sitemapData)
       );
-      console.log("RESPONE ID:  ", response.id);
-      console.log("RESPONSE: ", response);
+      console.log('RESPONE ID:  ', response.id);
+      console.log('RESPONSE: ', response);
       return response.id;
     } else {
-      throw new Error("Invalid sitemapID in ReviewId.js");
+      throw new Error('Invalid sitemapID in ReviewId.js');
     }
   } else {
     console.log(
-      "Review Sitemap already exists. Retrieving sitemapID from ReviewId.js."
+      'Review Sitemap already exists. Retrieving sitemapID from ReviewId.js.'
     );
     try {
-      const sitemapID = require("./ReviewId").sitemapID;
+      const sitemapID = require('./ReviewId').sitemapID;
       await client.updateSitemap(sitemapID, JSON.stringify(sitemapData));
       if (sitemapID) {
         return sitemapID;
       } else {
-        throw new Error("Invalid sitemapID in ReviewId.js");
+        throw new Error('Invalid sitemapID in ReviewId.js');
       }
     } catch (error) {
-      console.error("Error retrieving sitemapID from ReviewId.js:", error);
+      console.error('Error retrieving sitemapID from ReviewId.js:', error);
       throw error;
     }
   }
 }
 
 async function createAndRunReviewScrapingJob(sitemapId) {
-  console.log("Creating and running review scraping job for sitemap:", sitemapId);
+  console.log(
+    'Creating and running review scraping job for sitemap:',
+    sitemapId
+  );
   const scrapingJob = await client.createScrapingJob({
     sitemap_id: sitemapId,
-    driver: "fulljs",
+    driver: 'fulljs',
     page_load_delay: 2000,
     request_interval: 2000,
     proxy: 1,
-    custom_id: "daraz-review-scrapping",
+    custom_id: 'daraz-review-scrapping',
   });
 
-  console.log("Review scraping job created:", scrapingJob);
+  console.log('Review scraping job created:', scrapingJob);
   console.log(scrapingJob);
 
   return scrapingJob.id;
 }
 
 function combineReviewData() {
-  const filePath = path.join(__dirname, 'review_scrapingjob.json');
+  const filePath = path.join(__dirname, 'reviews_scrapingjob.json');
   const rawData = fs.readFileSync(filePath);
-  const dataLines = rawData.toString().split('\n').filter(line => line.trim() !== '');
+  const dataLines = rawData
+    .toString()
+    .split('\n')
+    .filter((line) => line.trim() !== '');
 
-  const reviews = dataLines.map(line => {
+  const reviews = dataLines.map((line) => {
     const reviewRow = JSON.parse(line);
     return reviewRow.review;
   });
@@ -108,31 +114,34 @@ function combineReviewData() {
 
 async function scrapeDarazReviews(productUrl) {
   const reviewSitemap = {
-    _id: "reviewSitemap",
+    _id: 'reviewSitemap',
     startUrl: [productUrl],
     selectors: [
       {
-        id: "review",
-        parentSelectors: ["_root"],
-        type: "SelectorText",
-        selector: "div.review-content-sl",
+        id: 'review',
+        parentSelectors: ['_root'],
+        type: 'SelectorText',
+        selector: 'div.review-content-sl',
         multiple: true,
-        regex: "",
+        regex: '',
       },
     ],
   };
 
   const sitemapResponse = await createReviewSitemapIfNotExists(reviewSitemap);
-  const scrapingJobIDFromScrapper = await createAndRunReviewScrapingJob(sitemapResponse);
+  const scrapingJobIDFromScrapper = await createAndRunReviewScrapingJob(
+    sitemapResponse
+  );
 
   await delay(40000);
 
   const outputFile = path.join(__dirname, `reviews_scrapingjob.json`);
   await client.downloadScrapingJobJSON(scrapingJobIDFromScrapper, outputFile);
-  console.log("Review data scraped and saved to:", outputFile);
+  console.log('Review data scraped and saved to:', outputFile);
 
+  console.log('BEFORE DISPLAYING REVIEWS');
   const combinedReviews = combineReviewData();
-  console.log(combinedReviews);
+  //console.log('REVIEWS SCRAPPED: ' + JSON.stringify(combinedReviews));
   return combinedReviews;
 }
 
