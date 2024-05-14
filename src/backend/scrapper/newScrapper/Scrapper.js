@@ -2,7 +2,7 @@ const api = require("@webscraperio/api-client-nodejs");
 const Client = api.Client;
 const path = require("path");
 const fs = require("fs");
-const gcp = require("./gcp");
+const combineProductData = require("./combineProductData");
 
 const client = new Client({
   token: "VA78W0fpZL3yIzsfsB1ApqvMUfga0YuaKbhkGZkL8rLbdRlQfrFxjVZmoNj1",
@@ -93,9 +93,7 @@ async function createAndRunScrapingJob(sitemapId) {
   console.log("Scraping job created:", scrapingJob);
   console.log(scrapingJob);
 
-  const outputFile = path.join(__dirname, `${sitemapId}_scrapingjob.json`);
-  await client.downloadScrapingJobJSON(scrapingJob.id, outputFile);
-  console.log("Data scrapped and saved to:", outputFile);
+  return scrapingJob.id;
 }
 
 async function createOrUpdateSitemapAndRunScrapingJob(productName) {
@@ -157,12 +155,17 @@ async function createOrUpdateSitemapAndRunScrapingJob(productName) {
   };
 
   const sitemapResponse = await createSitemapIfNotExists(sitemap);
-  await createAndRunScrapingJob(sitemapResponse);
+  const scrapingJobIDFromScrapper = await createAndRunScrapingJob(sitemapResponse);
 
-  await delay(120000);
+  await delay(40000);
 
-  const getGCPvalues = await gcp();
-  return getGCPvalues;
+  const outputFile = path.join(__dirname, `product_scrapingjob.json`);
+  await client.downloadScrapingJobJSON(scrapingJobIDFromScrapper, outputFile);
+  console.log("Data scrapped and saved to:", outputFile);
+
+  const combinedData = combineProductData();
+  console.log('Combined Data:', combinedData); // Log to verify the structure
+  return combinedData;
 }
 
 module.exports.scrapeDarazProducts = createOrUpdateSitemapAndRunScrapingJob;

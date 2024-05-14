@@ -1,7 +1,7 @@
 module.exports = {
   "_id": "daraz_api_call",
   "startUrl": [
-    "https://www.daraz.pk/catalog/?q=infin"
+    "https://www.daraz.pk/catalog/?q=game"
   ],
   "selectors": [
     {
