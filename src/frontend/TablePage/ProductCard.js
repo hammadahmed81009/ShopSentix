@@ -1,8 +1,12 @@
 import React, { useState } from 'react';
-import { Link as RouterLink } from 'react-router-dom';
+import { useNavigate } from 'react-router-dom';
+import Dashboard from '../Dashboard/index';
+import { useAveragePredictions } from './APC';
 
 const ProductCard = ({ ImageURL, Title, CurrentPrice, stars, URL }) => {
   const [loading, setLoading] = useState(false);
+  const { setAveragePredictions } = useAveragePredictions();
+  const navigate = useNavigate();
 
   const renderStars = () => {
     const starArray = Array.from({ length: stars }, (_, index) => index + 1);
@@ -56,6 +60,8 @@ const ProductCard = ({ ImageURL, Title, CurrentPrice, stars, URL }) => {
 
       const analyzeData = await analyzeResponse.json();
       console.log('Analysis results:', analyzeData);
+      setAveragePredictions(analyzeData.averagePredictions);
+      navigate('/dashboard');
     } catch (error) {
       console.error('Error:', error);
     } finally {
@@ -64,23 +70,24 @@ const ProductCard = ({ ImageURL, Title, CurrentPrice, stars, URL }) => {
   };
 
   return (
-    <div className="transition-transform duration-300 ease-in-out transform hover:scale-105">
-      <div className="max-w-screen bg-white shadow-md rounded-md overflow-hidden flex mx-auto hover:border-blue-500 hover:shadow-lg">
-        <div className="flex-shrink-0">
-          <img
-            className="h-32 w-32 object-cover"
-            src={ImageURL}
-            alt="Product Image"
-          />
-        </div>
+    <div>
+      <div className="transition-transform duration-300 ease-in-out transform hover:scale-105">
+        <div className="max-w-screen bg-white shadow-md rounded-md overflow-hidden flex mx-auto hover:border-blue-500 hover:shadow-lg">
+          <div className="flex-shrink-0">
+            <img
+              className="h-32 w-32 object-cover"
+              src={ImageURL}
+              alt="Product Image"
+            />
+          </div>
 
-        <div className="p-4 flex-grow">
-          <h2 className="text-xl font-bold mb-2 text-gray-800">{Title}</h2>
-          <p className="text-gray-500 mb-4">{`${CurrentPrice}`}</p>
-        </div>
-        <div className="flex-shrink-0 flex items-center justify-center p-4">
-          {renderStars()}
-          <RouterLink>
+          <div className="p-4 flex-grow">
+            <h2 className="text-xl font-bold mb-2 text-gray-800">{Title}</h2>
+            <p className="text-gray-500 mb-4">{`${CurrentPrice}`}</p>
+          </div>
+          <div className="flex-shrink-0 flex items-center justify-center p-4">
+            {renderStars()}
+
             <button
               onClick={handleAnalyzeClick}
               className={`bg-blue-500 text-white px-4 py-2 rounded-full hover:bg-blue-600 ${
@@ -90,9 +97,12 @@ const ProductCard = ({ ImageURL, Title, CurrentPrice, stars, URL }) => {
             >
               {loading ? 'Analyzing...' : 'Analyze'}
             </button>
-          </RouterLink>
+          </div>
         </div>
       </div>
+      {/*averagePredictions && (
+        <Dashboard averagePredictions={averagePredictions} />
+      )*/}
     </div>
   );
 };

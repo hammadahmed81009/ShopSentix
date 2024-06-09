@@ -1,7 +1,7 @@
 module.exports = {
   "_id": "reviewSitemap",
   "startUrl": [
-    "https://www.daraz.pk/products/samsung-a05s-6gb128gb-67-display-android-13-5000-mah-battery-i466959016-s2204021425.html?search=1"
+    "https://www.daraz.pk/products/xiaomi-mi-tv-stick-4k-portable-streaming-device-2gb8gb-i390177210-s1914501851.html?search=1"
   ],
   "selectors": [
     {

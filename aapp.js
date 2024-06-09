@@ -165,9 +165,29 @@ app.post('/scrape-reviews', async (req, res) => {
 
 const fetch = require('node-fetch');
 
+// Function to calculate the average of predictions
+function calculateAveragePredictions(predictions) {
+  const averages = Array(predictions[0][1].length).fill(0);
+
+  for (const prediction of predictions) {
+    const values = prediction[1];
+    for (let i = 0; i < values.length; i++) {
+      averages[i] += values[i];
+    }
+  }
+
+  for (let i = 0; i < averages.length; i++) {
+    averages[i] /= predictions.length;
+  }
+
+  return averages;
+}
+
 app.post('/analyze-reviews', async (req, res) => {
   console.log('ENTERED Analayze Reviews API');
   const { reviews } = req.body;
+  const predictions = [];
+
   try {
     // Process each review
     for (const review of reviews) {
@@ -181,9 +201,14 @@ app.post('/analyze-reviews', async (req, res) => {
 
       const data = await response.json();
       console.log('Prediction:', data);
+      predictions.push(data); // Store the prediction data
     }
 
-    res.status(200).send('Reviews analyzed');
+    // Calculate average predictions
+    const averagePredictions = calculateAveragePredictions(predictions);
+    console.log('Average Predictions:', averagePredictions);
+
+    res.status(200).send({ message: 'Reviews analyzed', averagePredictions });
   } catch (error) {
     console.error('Error analyzing reviews:', error);
     res.status(500).send('Error analyzing reviews');
